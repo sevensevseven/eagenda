@@ -1,6 +1,8 @@
 // TO USE AUTH IN ALL COMPONENTS THAT GET/PUSH DATA TO SERVER (ROUTES ONLY ABLE TO BE USED BY SUBS)
 // AUTH WILL GET TOKEN AND VERIFY IS SUBBED (BY CHECKING CUSTOMER WITH STRIPE) AND AFTER EVERYTHING SEND A STATE INT BACK THAT WILL INDICATE WHAT FRONTEND WILL DISPLAY
 
+// NB: Cheile secrete de auth pentru Stripe (preturi, webhook) sunt de test si le voi ascunde pe cele reale (cand dau drumul pe bani) in fisiere .env
+
 require("dotenv").config();
 
 const express = require("express");
