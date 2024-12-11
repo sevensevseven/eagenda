@@ -18,11 +18,8 @@ router.post("/", async (req, res) => {
         for (let index = 0; index < req.body.notitaids.length; index++) {
             const value = await findNotita(req.body.notitaids[index])
             
-            console.log(`${value.length}\n${JSON.stringify(value[0])}`)
             if (value.length > 0) notite.push(value[0]);
         }
-
-        console.log("ok" + notite)
         
         res.status(200).send(notite);
     } catch (error) {
