@@ -1,0 +1,211 @@
+import React, { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import inst from "./inst.js";
+import styles from "./styles.module.css";
+import axios from 'axios';
+import Button from 'react-bootstrap/Button'
+import Collapse from 'react-bootstrap/Collapse'
+import { useMediaQuery } from "react-responsive";
+
+function convertDate(toBeConverted) {
+    let gmtDate = typeof toBeConverted == "string" ? new Date(toBeConverted) : toBeConverted instanceof Date ? toBeConverted : null;
+
+    let bucharestOptions = { timeZone: 'Europe/Bucharest', hour12: false };
+    let year = gmtDate.toLocaleString('en-GB', { ...bucharestOptions, year: 'numeric' });
+    let month = gmtDate.toLocaleString('en-GB', { ...bucharestOptions, month: '2-digit' });
+    let day = gmtDate.toLocaleString('en-GB', { ...bucharestOptions, day: '2-digit' });
+    let hour = gmtDate.toLocaleString('en-GB', { ...bucharestOptions, hour: '2-digit', hour12: false });
+    let minute = gmtDate.toLocaleString('en-GB', { ...bucharestOptions, minute: '2-digit' });
+    let second = gmtDate.toLocaleString('en-GB', { ...bucharestOptions, second: '2-digit' });
+
+    return `${year}-${month}-${day}T${('0' + hour).slice(-2)}:${('0' + minute).slice(-2)}:${('0' + second).slice(-2)}.000Z`;
+}
+
+const Add = ({ uid }) => {
+    const [query, setQuery] = useState({
+        numarDosar: "",
+        numeParte: "",
+        institutie: ""
+    })
+
+    var months = ["ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie",
+        "august", "septembrie", "octombrie", "noiembrie", "decembrie"];
+
+    const [dosare, setDosare] = useState([])
+    const [error, setError] = useState("");
+    const [open, setOpen] = useState([]); 
+    const isMobile = useMediaQuery({ query: `(max-width: 1115px)`})
+    const [loadingResults, setLoadingResults] = useState(false); 
+    const [pushed, setPushed] = useState({state: true, index: -1});
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+        setLoadingResults(true);
+
+        if (query.numarDosar == "" && query.numeParte == "" && query.institutie == "") {
+            alert("Completati cel putin o casuta!");
+            setLoadingResults(false);
+            return;
+        }
+        
+        try {
+            setError("")
+            // const url = "http://localhost:8080/api/search";
+            const url = "https://accomplished-nourishment-production.up.railway.app/api/search"
+            const res = await axios.post(url, query);
+
+            setDosare(res.data);
+            for (let index = 0; index < res.data.length; index++) {
+                open.push(false)
+            }
+        } catch (error) {
+            if (error.response && 
+                error.response.status >= 400 && 
+                error.response.status <= 500
+            ) {
+                console.log(error)
+                if (error.response.data.message == "noResult") setError("No results found!")
+                else setError(error.response.data.message)
+            }
+        }
+
+        setLoadingResults(false);
+    }
+
+    async function handlePush(e, dosar, index) {
+        e.preventDefault()
+        setPushed({state: false, index: index});
+
+        try {
+            setError("")
+            // const url = "http://localhost:8080/api/push";
+            const url = "https://accomplished-nourishment-production.up.railway.app/api/push"
+            
+            const res = await axios.post(url, {
+                userid: uid,
+                numardosar: dosar.numar,
+                institutie: dosar.institutie,
+                dosardata: dosar,
+                lastsync: new Date(Date.now())
+            });   
+            console.log(res.message)
+        } catch (error) {
+            if (error.response && 
+                error.response.status >= 400 && 
+                error.response.status <= 500
+            ) {
+                setError(error.response.data.message)
+                console.log(error.response.data.message)
+            }
+        }
+        setPushed({state: true, index: -1});
+    }
+
+    return (
+        <div className={styles.container + " container px-auto py-4"}>
+            <div>
+                {error && <div className={styles.error_msg}>{error}</div>}
+                <h1>Adaugare Dosare</h1>
+                <form className={!isMobile ? "flex flex-row items-end justify-between" : "w-100"} onSubmit={handleSubmit}>
+                    <div className={!isMobile ? 'flex flex-row items-center justify-start' : ''}>
+                        <div className={`form-group mt-2 ${!isMobile ? "mr-3" : ""}`}>
+                            <label htmlFor="numarDosar">Numar Dosar</label>
+                            <input type="text" className="form-control" placeholder="Numar Dosar" onChange={e => setQuery({...query, numarDosar: e.target.value})} />
+                        </div>
+                        <div className={`form-group mt-2 ${!isMobile ? "mr-3" : ""}`}>
+                            <label htmlFor="numeParte">Nume Parte / Parti</label>
+                            <input type="text" className="form-control" placeholder="Nume" onChange={e => setQuery({...query, numeParte: e.target.value})}/>
+                        </div>
+                        <div className={`form-group mt-2 ${!isMobile ? "mr-3" : ""}`}>
+                            <label htmlFor="institutie">Instanta</label>
+                            <select className="form-select" value={query.institutie} onChange={e => setQuery({...query, institutie: e.target.value})}>
+                                <option></option>
+                                {
+                                    Object.keys(inst).sort().map((key, index) => <option>{inst[key]}</option>)
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" className="btn btn-primary mt-3">Cautare</button>
+                </form>
+            </div>
+            
+            <div className="my-3 pb-2 flex items-center justify-start border-bottom">{!isMobile ? <h3>Rezultatele Cautarii</h3> : <h5 className='m-0'>Rezultatele Cautarii</h5>}</div>
+            <div className={styles.results}>
+                {!loadingResults ? <div className='table-responsive'>
+                    <table className="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Numar Dosar</th>
+                                <th>Institutie</th>
+                                <th>Obiect</th>
+                                <th>Data ultimei modificari</th>
+                                <th>Actiuni</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                dosare.map((dosar, index) => {
+                                    return (
+                                        <>
+                                        <tr key={index}>
+                                            <td>{dosar.numar}</td>
+                                            <td>{dosar.institutie}</td>
+                                            <td>{dosar.obiect}</td>
+                                            <td>{new Date(dosar.dataModificare.replace("Z", "")).getDate() + " " + months[new Date(dosar.dataModificare.replace("Z", "")).getMonth()] + " " + new Date(dosar.dataModificare.replace("Z", "")).getFullYear() + " | " + ('0' + new Date(dosar.dataModificare.replace("Z", "")).getHours()).slice(-2) + ":" + ('0' + new Date(dosar.dataModificare.replace("Z", "")).getMinutes()).slice(-2)}</td>
+                                            <td>
+                                                <Button 
+                                                    className='m-1'
+                                                    variant="secondary"
+                                                    onClick={() => {
+                                                        var arr = open.slice();
+                                                        arr[index] = !open[index];
+                                                        setOpen(arr);
+                                                    }} 
+                                                    aria-expanded={open[index]} 
+                                                    aria-controls={`${index}`}
+                                                >Vezi Lista Parti</Button>
+                                                <button className='btn btn-primary m-1' onClick={e => handlePush(e, dosar, index)}>{!pushed.state && index == pushed.index ? "Se adauga..." : "Adaugare in lista de dosare"}</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colSpan={5}>
+                                                <Collapse in={open[index]}>
+                                                {typeof dosar.parti != "undefined" ? <div className='table-responsive mt-3' id={`${index}`}>
+                                                    <table className='table table-striped table-bordered'>
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Nume Parte</th>
+                                                                <th>Calitate Parte</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {
+                                                                dosar.parti.DosarParte.map((parte, index) => {
+                                                                    return (
+                                                                        <tr key={index}>
+                                                                            <td>{parte.nume}</td>
+                                                                            <td>{parte.calitateParte}</td>
+                                                                        </tr>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div> : <p>-</p>}
+                                                </Collapse>
+                                            </td>
+                                        </tr>
+                                        </>
+                                    )
+                                })
+                            }
+                        </tbody>
+                    </table>
+                </div> : <p>Loading...</p>}
+            </div>
+        </div>
+    )
+}
+
+export default Add;

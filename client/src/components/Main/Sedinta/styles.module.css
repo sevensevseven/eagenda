@@ -1,0 +1,56 @@
+.error_msg {
+	width: 100%;
+	padding: 15px;
+	margin: 5px 0;
+	font-size: 14px;
+	background-color: #f34646;
+	color: white;
+	border-radius: 5px;
+	text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    /* padding-top: 2rem;
+	padding-bottom: 2rem;
+	padding-left: 4rem;
+	padding-right: 4rem;
+    width: 100vw; */
+	padding-left: 1rem;
+	padding-right: 1rem;
+    height: calc(100vh - 70px);
+	-ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.boldrow {
+	outline: 4px solid green !important;
+    outline-offset: -2px !important;
+}
+
+.outlined_row:not(.outlined_row ~ .outlined_row) {
+	border-top: 4px solid black !important;
+}
+
+.outlined_row:has(+ :not(.outlined_row)),
+.outlined_row:last-child {
+	border-bottom: 4px solid black !important;
+}
+
+
+/* .outlined_row:first-child td {
+	outline-width: 0 2px 2px 2px !important;
+}
+  
+.outlined_row:last-child td {
+	outline-width: 2px 2px 0 2px !important;
+}
+  
+.outlined_row:first-child td:first-child {
+	outline-width: 2px 0 2px 2px !important; 
+}
+  
+.outlined_row:first-child td:last-child {
+	outline-width: 2px 2px 2px 0 !important; 
+}   */

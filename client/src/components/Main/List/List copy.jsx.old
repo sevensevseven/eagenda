@@ -1,0 +1,279 @@
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import styles from "./styles.module.css"
+import Button from 'react-bootstrap/Button'
+import Collapse from 'react-bootstrap/Collapse'
+import Sedinta from '../Sedinta/Sedinta';
+import Card from './Card';
+
+const List = ({ userid, f }) => {
+    const [dosare, setDosare] = useState([])
+    const [error, setError] = useState("");
+    const [openparti, setOpenparti] = useState([]); 
+    const [opensedinte, setOpensedinte] = useState([]); 
+    const [deleted, setDeleted] = useState(true)
+    const [finished, setFinished] = useState(false);
+    const [refreshed, setRefreshed] = useState({state: true, index: -1});
+    const [viewSedinta, setViewSedinta] = useState(false);
+    const [propsToPass, setPropsToPass] = useState([])
+    const [bold, setBold] = useState("");
+    const [oraBold, setOraBold] = useState("");
+
+    var months = ["ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie",
+        "august", "septembrie", "octombrie", "noiembrie", "decembrie"];
+
+    function convertDate(toBeConverted) {
+        let gmtDate = typeof toBeConverted == "string" ? new Date(toBeConverted) : toBeConverted instanceof Date ? toBeConverted : null;
+    
+        let bucharestOptions = { timeZone: 'Europe/Bucharest', hour12: false };
+        let year = gmtDate.toLocaleString('en-GB', { ...bucharestOptions, year: 'numeric' });
+        let month = gmtDate.toLocaleString('en-GB', { ...bucharestOptions, month: '2-digit' });
+        let day = gmtDate.toLocaleString('en-GB', { ...bucharestOptions, day: '2-digit' });
+        let hour = gmtDate.toLocaleString('en-GB', { ...bucharestOptions, hour: '2-digit', hour12: false });
+        let minute = gmtDate.toLocaleString('en-GB', { ...bucharestOptions, minute: '2-digit' });
+        let second = gmtDate.toLocaleString('en-GB', { ...bucharestOptions, second: '2-digit' });
+    
+        return `${year}-${month}-${day}T${('0' + hour).slice(-2)}:${('0' + minute).slice(-2)}:${('0' + second).slice(-2)}.000Z`;
+    }
+
+    function find(arr, numar) {
+        arr.forEach((sedinta) => {
+            if (typeof sedinta.dosare != "undefined") {
+                sedinta.dosare.SedintaDosar.forEach(element => {
+                    if (element.numar == numar) {
+                        var toBeReturned = sedinta.dosare.SedintaDosar
+                        toBeReturned.sort((a, b) => a.ora.localeCompare(b.ora));
+                        setPropsToPass(toBeReturned);
+                    }
+                });
+            }
+        })   
+    }
+
+    useEffect(() => {
+        try {
+            if (deleted) {
+                setDeleted(false)
+                setFinished(false);
+                // const url = "http://localhost:8080/api/list";
+                const url = "https://accomplished-nourishment-production.up.railway.app/api/list"
+
+                axios.post(url, {
+                    uid: userid,
+                }).then(response => {
+                    setDosare(response.data.data)
+                    console.log(response.data.data)
+                    setFinished(true);
+                });
+            }
+        } catch (error) {
+            if (error.response && 
+                error.response.status >= 400 && 
+                error.response.status <= 500
+            ) {
+                setError(error.response.data.message)
+                console.log(error.response.data.message)
+            }
+        }
+    }, [deleted])
+
+    async function handleDelete(dosar) {
+        try {
+            setError('')
+            // const url = "http://localhost:8080/api/delete";
+            const url = "https://accomplished-nourishment-production.up.railway.app/api/delete"
+
+            const res = await axios.post(url, {
+                uid: userid,
+                numardosar: dosar.numar,
+                institutie: dosar.institutie
+            })
+
+            console.log(res.data.message)
+
+            setDeleted(true);
+        } catch (error) {
+            setError(error.response.data.message);
+            console.log(error.response.data.message);
+        }
+    }
+
+    async function handleRefresh(dosar, index) {
+        setRefreshed({state: false, index: index});
+        try {
+            setError("")
+            // const url = "http://localhost:8080/api/refresh";
+            const url = "https://accomplished-nourishment-production.up.railway.app/api/refresh"
+
+            const res = await axios.post(url, {
+                userid: userid,
+                numardosar: dosar.numar,
+                institutie: dosar.institutie
+            })
+
+            console.log(res.data.message)
+
+            setDeleted(true);
+        } catch (error) {
+            setError(error.response.data.message);
+            console.log(error.response.data.message);
+        }
+        setRefreshed({state: true, index: -1});
+    }
+
+    function viewSedinte(dataSedinta, institutie, numar, ora) {
+        setViewSedinta(true);
+        setFinished(false);
+
+        const url = "https://accomplished-nourishment-production.up.railway.app/api/listasedinta"
+
+        axios.post(url, {
+            dataSedinta: dataSedinta,
+            institutie: institutie,
+        }).then(response => {
+            find(response.data, numar)
+            setBold(numar)
+            setOraBold(ora);
+            setFinished(true);
+        }); 
+    }
+
+    if (finished ) return (
+        viewSedinta ? <Sedinta data={propsToPass} changeView={setViewSedinta} numar={bold} ora={oraBold} /> : <div className={styles.container + " container px-auto py-4"}>
+            {error && <div className={styles.error_msg}>{error}</div>}
+            <h1>Lista Dosare</h1>
+            <Card/>
+            {dosare.length > 0 ? <div className='table-responsive'>
+                <table className="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Numar Dosar</th>
+                            <th>Institutie</th>
+                            <th>Obiect</th>
+                            <th>Data ultimei modificari</th>
+                            <th>Actiuni</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            dosare.map((d, index) => {
+                                let dosar = d.dosardata;
+                                let last = d.lastsync;
+                                return (
+                                    <>
+                                    <tr key={index}>
+                                        <td>{dosar.numar}</td>
+                                        <td>{dosar.institutie}</td>
+                                        <td>{dosar.obiect}</td>
+                                        <td>{new Date(dosar.dataModificare.replace("Z", "")).getDate() + " " + months[new Date(dosar.dataModificare.replace("Z", "")).getMonth()] + " " + new Date(dosar.dataModificare.replace("Z", "")).getFullYear() + " | " + ('0' + new Date(dosar.dataModificare.replace("Z", "")).getHours()).slice(-2) + ":" + ('0' + new Date(dosar.dataModificare.replace("Z", "")).getMinutes()).slice(-2)}</td>
+                                        <td>
+                                            <Button 
+                                                className='m-1'
+                                                variant="secondary"
+                                                onClick={() => {
+                                                    var arr = openparti.slice();
+                                                    arr[index] = !openparti[index];
+                                                    setOpenparti(arr);
+                                                }} 
+                                                aria-expanded={openparti[index]} 
+                                                aria-controls={`${index}`}
+                                            >Vezi Lista Parti</Button>
+                                            <Button 
+                                                className='m-1'
+                                                variant="secondary"
+                                                onClick={() => {
+                                                    var arr = opensedinte.slice();
+                                                    arr[index] = !opensedinte[index];
+                                                    setOpensedinte(arr);
+                                                }} 
+                                                aria-expanded={opensedinte[index]} 
+                                                aria-controls={`${index}`}
+                                            >Vezi Lista Sedinte</Button>
+                                            <button className='btn btn-danger m-1' onClick={e => handleDelete(dosar)}>Sterge</button>
+                                            <button className='btn btn-success m-1' onClick={e => handleRefresh(dosar, index)}>{!refreshed.state && index == refreshed.index ? "Refreshing..." : "Refresh"}</button>
+                                            <p className='mx-1'><em>{"Last refreshed: " + new Date(last).getDate() + " " + months[new Date(last).getMonth()] + " " + new Date(last).getFullYear() + " | " + ('0' + new Date(last).getHours()).slice(-2) + ":" + ('0' + new Date(last).getMinutes()).slice(-2)}</em></p>
+                                                
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colSpan={5}>
+                                            <Collapse in={openparti[index]}>
+                                            {typeof dosar.parti != "undefined" ? <div className='table-responsive mt-3' id={`${index}`}>
+                                                <table className='table table-striped table-bordered'>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Nume Parte</th>
+                                                            <th>Calitate Parte</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {
+                                                            dosar.parti.DosarParte.map((parte, index) => {
+                                                                return (
+                                                                    <tr key={index}>
+                                                                        <td>{parte.nume}</td>
+                                                                        <td>{parte.calitateParte}</td>
+                                                                    </tr>
+                                                                )
+                                                            })
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div> : <p>-</p>}
+                                            </Collapse>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colSpan={5}>
+                                            <Collapse in={opensedinte[index]}>
+                                            {typeof dosar.sedinte != "undefined" ? <div className='table-responsive mt-3' id={`${index}`}>
+                                                <table className='table table-striped table-bordered'>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Data + Ora</th>
+                                                            <th>Sumar Solutie</th>
+                                                            <th>Actiuni</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {
+                                                            dosar.sedinte.DosarSedinta.map((sedinta, index) => {
+                                                                return (
+                                                                    <tr key={index}>
+                                                                        <td>{('0' + new Date(convertDate(sedinta.data)).getDate()).slice(-2) + " " + months[new Date(sedinta.data).getMonth()] + " " + new Date(sedinta.data).getFullYear() + " | " + sedinta.ora}</td>
+                                                                        <td>{sedinta.solutie + " - " + sedinta.solutieSumar}</td>
+                                                                        <td>
+                                                                            <button style={{minWidth: 120}} className='btn btn-primary m-1' onClick={() => viewSedinte(sedinta.data, dosar.institutie, dosar.numar, sedinta.ora)}>Vezi Lista de Sedinta</button>
+                                                                        </td>
+                                                                    </tr>
+                                                                )
+                                                            })
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div> : <p>-</p>}
+                                            </Collapse>
+                                        </td>
+                                    </tr>
+                                    </>
+                                )
+                            })
+                        }
+                    </tbody>
+                </table>
+            </div> : <div>
+                <h4>
+                    Inca nu s-a adaugat niciun dosar. Adaugati-va dosarele acum!
+                </h4>
+                <button className='btn btn-success my-1' onClick={e => f(2)}>Adaugare Dosare</button>
+            </div>}
+        </div>
+    )
+    else return (
+        <div className={styles.container + " container px-auto py-4"}>
+            <p>Loading...</p>
+        </div>
+    )
+}
+
+export default List;
