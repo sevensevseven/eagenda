@@ -36,7 +36,7 @@ const Main = () => {
 				{},
 				{
 					headers: {
-						'Authorization': token
+						'Authorization': `Bearer ${localStorage.getItem('token')}`
 					}
 				}
 			).then(response => {
@@ -44,6 +44,7 @@ const Main = () => {
 			});
 		} catch (error) {
 			callback(error, null);
+			console.log(error)
 		}
 	};
 

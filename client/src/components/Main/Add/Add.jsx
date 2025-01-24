@@ -64,7 +64,11 @@ const Add = ({ uid }) => {
             setError("")
             // const url = "http://localhost:8080/api/search";
             const url = "https://accomplished-nourishment-production.up.railway.app/api/search"
-            const res = await axios.post(url, query);
+            const res = await axios.post(url, query, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                }
+            });
 
             setDosare(res.data);
             res.data.forEach(() => {
@@ -107,6 +111,10 @@ const Add = ({ uid }) => {
                 institutie: dosar.institutie,
                 dosardata: dosar,
                 lastsync: new Date(Date.now())
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                }
             });   
             console.log(res.message)
         } catch (error) {

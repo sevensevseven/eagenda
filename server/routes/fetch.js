@@ -21,7 +21,7 @@ router.post("/", async (req, res) => {
     if (!token) return res.status(401).send('Access Denied. No token provided.');
 
     try {
-        const decoded = parseJwt(token)
+        const decoded = parseJwt(token.split(' ')[1])
         const user = await findUserById(decoded.id);
         
         res.status(200).send(user);

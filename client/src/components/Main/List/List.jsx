@@ -68,6 +68,10 @@ const List = ({ userid, f }) => {
 
                 axios.post(url, {
                     uid: userid,
+                }, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem("token")}`
+                    }
                 }).then(response => {
                     setDosare(response.data.data)
                     response.data.data.forEach(() => {
@@ -103,6 +107,10 @@ const List = ({ userid, f }) => {
                 uid: userid,
                 numardosar: dosar.numar,
                 institutie: dosar.institutie
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                }
             })
 
             console.log(res.data.message)
@@ -125,6 +133,10 @@ const List = ({ userid, f }) => {
                 userid: userid,
                 numardosar: dosar.numar,
                 institutie: dosar.institutie
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                }
             })
 
             console.log(res.data.message)
@@ -146,6 +158,10 @@ const List = ({ userid, f }) => {
         axios.post(url, {
             dataSedinta: dataSedinta,
             institutie: institutie,
+        }, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("token")}`
+            }
         }).then(response => {
             find(response.data, numar)
             setBold(numar)

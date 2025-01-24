@@ -22,6 +22,10 @@ const Welcome = ({ userInfo, f }) => {
                 emailmodificari: notif,
                 emailsedinte: notif2,
                 userid: userInfo.id
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                }
             })
         } catch (error) {
             if (error.response && 
@@ -44,7 +48,8 @@ const Welcome = ({ userInfo, f }) => {
                 customer_id: userInfo.customer_id
             }, {
                 headers: {
-                    "Access-Control-Allow-Origin": "*"
+                    "Access-Control-Allow-Origin": "*",
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
                 }
             })
 

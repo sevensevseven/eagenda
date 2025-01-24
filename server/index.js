@@ -23,6 +23,10 @@ const changeemailmodificariRoutes = require("./routes/changeemailmodificari");
 const listasedintaRoutes = require("./routes/listasedinta");
 const addnotitaRoutes = require("./routes/addnotita");
 const getnotitaRoutes = require("./routes/getnotita");
+
+const rateLimitMiddleware = require("./middleware/rateLimit");
+const authenticateJWT = require('./middleware/apiAuth');
+
 const stripeWebhookRoute = express.Router();
 
 const torun = require("./jobmodificari");
@@ -117,7 +121,7 @@ stripeWebhookRoute.post(
                 const customer = await stripe.customers.retrieve(subscription.customer);
                 const user = await findUserByEmail(customer.email);
 
-                // IMPORTANT: UNCOMMENT WHEN APP IS LIVE
+                // TODO IMPORTANT: UNCOMMENT WHEN APP IS LIVE
                 // await deleteDosare(user[0].id);
 
                 break;
@@ -152,10 +156,15 @@ stripeWebhookRoute.post(
     }    
 );
 
-app.use("/api/webhook", stripeWebhookRoute)
+app.use("/api/webhook", stripeWebhookRoute);
+
+app.set('trust proxy', 1);
 
 // TODO: UPGRADE LIMIT TO 50MB BECAUSE SOMETIMES 413 IS THROWN
 app.use(express.json());
+
+app.use(rateLimitMiddleware);
+app.use(authenticateJWT); 
 
 const [month, quarter, year] = 
 ['price_1PnHvVIImGcHCAj8tlYcGMao', 'price_1PnIC4IImGcHCAj8KDJYO4GI', 'price_1PnI4WIImGcHCAj83wE0BeK7'];
@@ -184,8 +193,8 @@ const stripeSession = async(plan, uid) => {
                     quantity: 1
                 },
             ],
-            success_url: "https://eagendasite.netlify.app/success",
-            cancel_url: "https://eagendasite.netlify.app",
+            success_url: "https://curiachronos.ro/success",
+            cancel_url: "https://curiachronos.ro",
             customer_email: user[0].email
         });
         return session;
@@ -214,7 +223,7 @@ app.post("/api/create-subscription-checkout-session", async(req, res) => {
     try {
         const session = await stripeSession(planId, customerId);
 
-        insertSessionIdToUser(req.body.customerId, session.id);
+        await insertSessionIdToUser(req.body.customerId, session.id);
 
         return res.json({session})
 
@@ -225,7 +234,7 @@ app.post("/api/create-subscription-checkout-session", async(req, res) => {
 
 app.post('/api/create-portal-session', async (req, res) => {
     try {
-        const returnUrl = "https://eagendasite.netlify.app";
+        const returnUrl = "https://curiachronos.ro";
     
         const portalSession = await stripe.billingPortal.sessions.create({
             customer: req.body.customer_id,

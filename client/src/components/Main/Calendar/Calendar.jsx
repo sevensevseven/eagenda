@@ -36,6 +36,10 @@ const Event = ({ userid, sedinte, setViewSedinta, setBold, setPropsToPass, setFi
 
         axios.post(url, {
             notitaids: notitaids
+        }, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("token")}`
+            }
         }).then(response => {
             const temp = response.data.map(element => ({
                 notitaid: element.notitaid,
@@ -55,6 +59,10 @@ const Event = ({ userid, sedinte, setViewSedinta, setBold, setPropsToPass, setFi
         axios.post(url, {
             dataSedinta: dataSedinta,
             institutie: institutie,
+        }, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("token")}`
+            }
         }).then(response => {
             find(response.data, numar)
             setBold(numar)
@@ -72,7 +80,11 @@ const Event = ({ userid, sedinte, setViewSedinta, setBold, setPropsToPass, setFi
 
         const url = "https://accomplished-nourishment-production.up.railway.app/api/addnotita";
 
-        axios.post(url, notiteArr[notiteArr.findIndex(element => element.notitaid == notitaid)]).then(response => {
+        axios.post(url, notiteArr[notiteArr.findIndex(element => element.notitaid == notitaid)], {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("token")}`
+            }
+        }).then(response => {
             console.log(response)
             var temp = [...savingArr];
             temp[index] = false;
@@ -148,6 +160,10 @@ const AutoCalendar = ({ userid }) => {
 
             axios.post(url, {
                 uid: userid,
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                }
             }).then(response => {
                 callback(null, response)
                 
