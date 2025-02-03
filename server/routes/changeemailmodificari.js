@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const db = require("../db");
+const db = require("../db").default;
 
 function change(val1, val2, id) {
     return new Promise((resolve, reject) => {

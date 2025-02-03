@@ -1,4 +1,5 @@
-const mysql2 = require("mysql2");
+import process from "process"
+import { createPool } from "mysql2";
 
 // const db = mysql2.createPool({
 //     connectionLimit: 100,
@@ -8,7 +9,7 @@ const mysql2 = require("mysql2");
 //     database: "law"
 // })
 
-const db = mysql2.createPool({
+const db = createPool({
     host: process.env.MYSQLHOST,
     port: process.env.MYSQLPORT,
     user: process.env.MYSQLUSER,
@@ -19,4 +20,4 @@ const db = mysql2.createPool({
     queueLimit: 0
 });
 
-module.exports = db
+export default db

@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const db = require("../db")
+const db = require("../db").default
 
 function createDosar(requestbody) {
     return new Promise((resolve, reject) => {

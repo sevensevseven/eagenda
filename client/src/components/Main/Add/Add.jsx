@@ -1,25 +1,10 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import inst from "./inst.js";
 import styles from "./styles.module.css";
 import axios from 'axios';
-import Button from 'react-bootstrap/Button'
-import Collapse from 'react-bootstrap/Collapse'
 import { useMediaQuery } from "react-responsive";
-
-function convertDate(toBeConverted) {
-    let gmtDate = typeof toBeConverted == "string" ? new Date(toBeConverted) : toBeConverted instanceof Date ? toBeConverted : null;
-
-    let bucharestOptions = { timeZone: 'Europe/Bucharest', hour12: false };
-    let year = gmtDate.toLocaleString('en-GB', { ...bucharestOptions, year: 'numeric' });
-    let month = gmtDate.toLocaleString('en-GB', { ...bucharestOptions, month: '2-digit' });
-    let day = gmtDate.toLocaleString('en-GB', { ...bucharestOptions, day: '2-digit' });
-    let hour = gmtDate.toLocaleString('en-GB', { ...bucharestOptions, hour: '2-digit', hour12: false });
-    let minute = gmtDate.toLocaleString('en-GB', { ...bucharestOptions, minute: '2-digit' });
-    let second = gmtDate.toLocaleString('en-GB', { ...bucharestOptions, second: '2-digit' });
-
-    return `${year}-${month}-${day}T${('0' + hour).slice(-2)}:${('0' + minute).slice(-2)}:${('0' + second).slice(-2)}.000Z`;
-}
 
 const Add = ({ uid }) => {
     const [query, setQuery] = useState({
@@ -33,7 +18,6 @@ const Add = ({ uid }) => {
 
     const [dosare, setDosare] = useState([])
     const [error, setError] = useState("");
-    const [open, setOpen] = useState([]); 
     const isMobile = useMediaQuery({ query: `(max-width: 1115px)`})
     const [loadingResults, setLoadingResults] = useState(false); 
     const [pushed, setPushed] = useState({state: true, index: -1});
@@ -149,7 +133,7 @@ const Add = ({ uid }) => {
                             <select className="form-select" value={query.institutie} onChange={e => setQuery({...query, institutie: e.target.value})}>
                                 <option></option>
                                 {
-                                    Object.keys(inst).sort().map((key, index) => <option>{inst[key]}</option>)
+                                    Object.keys(inst).sort().map((key) => <option key={key}>{inst[key]}</option>)
                                 }
                             </select>
                         </div>
@@ -234,6 +218,10 @@ const Add = ({ uid }) => {
             </div>
         </div>
     )
+}
+
+Add.propTypes = {
+    uid: PropTypes.string.isRequired
 }
 
 export default Add;

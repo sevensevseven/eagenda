@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const joi = require("joi");
 const bcrypt = require("bcrypt");
-const db = require("../db");
+const db = require("../db").default;
 const jwt = require("jsonwebtoken")
 
 function findUser(email) {

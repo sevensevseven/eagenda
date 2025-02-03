@@ -1,8 +1,11 @@
-const router = require("express").Router();
-const bcrypt = require("bcrypt");
-const db = require("../db")
-const joi = require("joi")
-const passwordComplexity = require("joi-password-complexity");
+import joi from "joi"
+import passwordComplexity from "joi-password-complexity"
+import express from "express"
+import bcrypt from "bcrypt"
+import db from "../db"
+import process from "process"
+
+const router = express.Router();
 
 function findUser(email) {
     return new Promise((resolve, reject) => {
@@ -54,4 +57,4 @@ const validate = (data) => {
     return schema.validate(data);
 }
 
-module.exports = router;
+export default router;

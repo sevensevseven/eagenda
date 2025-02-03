@@ -1,3 +1,4 @@
+import React from "react"
 import styles from "./styles.module.css";
 import axios from 'axios';
 import { useMemo, useState, useRef, useEffect } from "react";
@@ -17,7 +18,7 @@ const Main = () => {
 	const [subbed, setSubbed] = useState(false);
 	const [pastDue, setPastDue] = useState(false);
 	const isOpenRef = useRef(false); 
-	const [isVisible, setIsVisible] = useState(true);
+	//const [isVisible, setIsVisible] = useState(true);
 	const isScrollingVisible = useRef(true);
 	const navbarRef = useRef(null);
 
@@ -36,7 +37,7 @@ const Main = () => {
 				{},
 				{
 					headers: {
-						'Authorization': `Bearer ${localStorage.getItem('token')}`
+						'Authorization': `Bearer ${token}`
 					}
 				}
 			).then(response => {
@@ -156,7 +157,7 @@ const Main = () => {
 			<nav className={styles.navbar}>
 				<div className="container mx-auto flex justify-between items-center">
 					{/* Brand/Logo */}
-					<div className="text-white font-bold text-xl cursor-pointer" onClick={e => setPage(0)}>
+					<div className="text-white font-bold text-xl cursor-pointer" onClick={() => setPage(0)}>
 						App
 					</div>
 
@@ -185,9 +186,9 @@ const Main = () => {
 
 					{/* Desktop Nav Links */}
 					<div className="hidden md:flex md:space-x-6 items-center">
-						{subbed ? <><div className="block py-2 text-white hover:text-gray-300 cursor-pointer" onClick={e => setPage(1)}>Calendar</div>
-						<div className="block py-2 text-white hover:text-gray-300 cursor-pointer" onClick={e => setPage(2)}>Adauga Dosare</div>
-						<div className="block py-2 text-white hover:text-gray-300 cursor-pointer" onClick={e => setPage(3)}>Lista Dosare</div></> : <></>}
+						{subbed ? <><div className="block py-2 text-white hover:text-gray-300 cursor-pointer" onClick={() => setPage(1)}>Calendar</div>
+						<div className="block py-2 text-white hover:text-gray-300 cursor-pointer" onClick={() => setPage(2)}>Adauga Dosare</div>
+						<div className="block py-2 text-white hover:text-gray-300 cursor-pointer" onClick={() => setPage(3)}>Lista Dosare</div></> : <></>}
 					</div>
 
 					{/* Button */}
@@ -200,9 +201,9 @@ const Main = () => {
 			</nav>
 			{/* Mobile Menu */}
 			<div ref={navbarRef} className={`md:hidden fixed w-screen`} style={{display: "none", backgroundColor: "#1A2130", zIndex: 999999999}}>
-				{subbed ? <><div className="block py-2 px-4 text-white hover:text-gray-300 cursor-pointer" onClick={e => setPage(1)}>Calendar</div>
-				<div className="block py-2 px-4 text-white hover:text-gray-300 cursor-pointer" onClick={e => setPage(2)}>Adauga Dosare</div>
-				<div className="block py-2 px-4 text-white hover:text-gray-300 cursor-pointer" onClick={e => setPage(3)}>Lista Dosare</div></> : <></>}
+				{subbed ? <><div className="block py-2 px-4 text-white hover:text-gray-300 cursor-pointer" onClick={() => setPage(1)}>Calendar</div>
+				<div className="block py-2 px-4 text-white hover:text-gray-300 cursor-pointer" onClick={() => setPage(2)}>Adauga Dosare</div>
+				<div className="block py-2 px-4 text-white hover:text-gray-300 cursor-pointer" onClick={() => setPage(3)}>Lista Dosare</div></> : <></>}
 				<button className="block mt-1 mb-3 ml-5 bg-white text-slate-600 px-4 py-2 rounded hover:bg-gray-200" onClick={handleLogout}>
 					Log Out
 				</button>

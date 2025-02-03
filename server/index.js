@@ -3,37 +3,37 @@
 
 // NB: Cheile secrete de auth pentru Stripe (preturi, webhook) sunt de test si le voi ascunde pe cele reale (cand dau drumul pe bani) in fisiere .env
 
-require("dotenv").config();
 
-const express = require("express");
-const router = express.Router();
+import dotenv from "dotenv";
+import express from "express";
+import cors from "cors"
+import cron from "node-cron"
+
+
+import userRoutes from "./routes/users"
+import authRoutes from "./routes/auth"
+import fetchRoutes from "./routes/fetch"
+import searchRoutes from "./routes/search"
+import pushRoutes from "./routes/push"
+import listRoutes from "./routes/list"
+import deleteRoutes from "./routes/delete"
+import refreshRoutes from "./routes/refresh"
+import changeemailmodificariRoutes from "./routes/changeemailmodificari"
+import listasedintaRoutes from "./routes/listasedinta"
+import addnotitaRoutes from "./routes/addnotita"
+import getnotitaRoutes from "./routes/getnotita"
+import rateLimitMiddleware from "./middleware/rateLimit";
+import authenticateJWT from "./middleware/apiAuth";
+import torun from "./jobmodificari"
+import db from "./db"
+
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const cfg = dotenv.config();
 const app = express();
-const cors = require("cors");
-const cron = require("node-cron");
-
-const userRoutes = require("./routes/users");
-const authRoutes = require("./routes/auth");
-const fetchRoutes = require("./routes/fetch");
-const searchRoutes = require("./routes/search");
-const pushRoutes = require("./routes/push");
-const listRoutes = require("./routes/list");
-const deleteRoutes = require("./routes/delete");
-const refreshRoutes = require("./routes/refresh");
-const changeemailmodificariRoutes = require("./routes/changeemailmodificari");
-const listasedintaRoutes = require("./routes/listasedinta");
-const addnotitaRoutes = require("./routes/addnotita");
-const getnotitaRoutes = require("./routes/getnotita");
-
-const rateLimitMiddleware = require("./middleware/rateLimit");
-const authenticateJWT = require('./middleware/apiAuth');
-
-const stripeWebhookRoute = express.Router();
-
-const torun = require("./jobmodificari");
-const db = require("./db");
-
 app.use(cors());
 
+const stripeWebhookRoute = express.Router();
 stripeWebhookRoute.post(
     '/',
     express.raw({ type: 'application/json' }),
@@ -78,6 +78,7 @@ stripeWebhookRoute.post(
             })
         }
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         function deleteDosare(id) {
             return new Promise((resolve, reject) => {
                 const sql = "DELETE FROM `dosare` WHERE `userid`=?";
@@ -111,7 +112,7 @@ stripeWebhookRoute.post(
             //     status = subscription.status;
             //     console.log(`Subscription status is ${status}.`);
             //     break;
-            case 'customer.subscription.deleted':
+            case 'customer.subscription.deleted': {
                 subscription = event.data.object;
                 status = subscription.status;
                 console.log(`Deleted - Subscription status is ${status}.`);
@@ -119,12 +120,12 @@ stripeWebhookRoute.post(
                 await handleDelete(subscription.customer);
 
                 const customer = await stripe.customers.retrieve(subscription.customer);
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 const user = await findUserByEmail(customer.email);
 
                 // TODO IMPORTANT: UNCOMMENT WHEN APP IS LIVE
                 // await deleteDosare(user[0].id);
-
-                break;
+            } break;
             case 'customer.subscription.created':
                 subscription = event.data.object;
                 status = subscription.status;
@@ -169,7 +170,10 @@ app.use(authenticateJWT);
 const [month, quarter, year] = 
 ['price_1PnHvVIImGcHCAj8tlYcGMao', 'price_1PnIC4IImGcHCAj8KDJYO4GI', 'price_1PnI4WIImGcHCAj83wE0BeK7'];
 
-const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY)
+import Stripe from "stripe"
+import process from "process"
+
+const stripe = Stripe(process.env.STRIPE_PRIVATE_KEY)
 
 function findUserById(id) {
     return new Promise((resolve, reject) => {

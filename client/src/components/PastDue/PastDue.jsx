@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styles from "./styles.module.css";
 import axios from 'axios';
 
@@ -35,6 +36,10 @@ const PastDue = ({ userInfo }) => {
             <button className='btn btn-success mt-3 max-w-sm' onClick={openSubscriptionPortal}>Modificare Date Abonament</button>
         </div>
     )
+}
+
+PastDue.propTypes = {
+    userInfo: PropTypes.object.isRequired
 }
 
 export default PastDue

@@ -1,6 +1,8 @@
-const db = require("./db")
-const Portal = require("./portal")
-const MailJet = require('node-mailjet')
+import { query } from "./db"
+import { cautareDosare } from "./portal"
+import MailJet from 'node-mailjet'
+
+import {process} from "node"
 
 const mailjet = new MailJet({
     apiKey: '4dcdbe6c6ff9a2b2c164f0d5213dc713',
@@ -10,7 +12,7 @@ const mailjet = new MailJet({
 function findDosare() {
     return new Promise((resolve, reject) => {
         const sql = "SELECT * FROM `dosare` WHERE 1";
-        db.query(sql, [], (err, result) => {
+        query(sql, [], (err, result) => {
             if (err) reject(err);
             resolve(result)
         });
@@ -74,7 +76,7 @@ function updateDosar(newDosar, dosarvechi) {
         const sql =
             "UPDATE `dosare` SET `dosardata`=?,`lastsync`=?, `numardosar`=? WHERE `userid`=? AND `numardosar`=? AND `institutie`=?";
         const values = [JSON.stringify(newDosar), new Date(Date.now()), newDosar.numar, dosarvechi.userid, dosarvechi.numardosar, dosarvechi.institutie];
-        db.query(sql, values, (err, result) => {
+        query(sql, values, (err, result) => {
             if (err) reject(err)
             resolve(result)
         });
@@ -86,7 +88,7 @@ function updatelastcheckedsedinte(userid, dosarid) {
         const sql =
             "UPDATE `dosare` SET `lastcheckedsedinte`=? WHERE `userid`=? AND `dosarid`=?";
         const values = [new Date(Date.now()), userid, dosarid];
-        db.query(sql, values, (err, result) => {
+        query(sql, values, (err, result) => {
             if (err) reject(err)
             resolve(result)
         });
@@ -96,7 +98,7 @@ function updatelastcheckedsedinte(userid, dosarid) {
 function findUser(id) {
     return new Promise((resolve, reject) => {
         const sql = "SELECT * FROM users WHERE `id`= ?";
-        db.query(sql, [id], (err, result) => {
+        query(sql, [id], (err, result) => {
             if (err) reject(err);
             resolve(result)
         });
@@ -148,7 +150,7 @@ function chunkArray(array, chunkSize) {
     return chunks;
 }
 
-function countElementsForKey(arrayOfObjects, key) {
+function countElementsForKey(arrayOfObjects) {
     let count = 0;
 
     arrayOfObjects.forEach(o => {
@@ -174,7 +176,7 @@ async function toRun() {
         console.log(`Fetched ${dosare.length} dosare`)
 
         dosare.forEach(dosar => {
-            jsonData = JSON.parse(dosar.dosardata);
+            var jsonData = JSON.parse(dosar.dosardata);
             dosar.dosardata = jsonData
         });
         console.log(`Parsed string to JSON`)
@@ -188,7 +190,7 @@ async function toRun() {
             var updatePromises = chunk.map(async dosar => {
                 if (index > 0 && index % 300 == 0) await sleep(15 * 1000);
     
-                const newDosar = await Portal.cautareDosare(dosar.numardosar, "", "", dosar.institutie);
+                const newDosar = await cautareDosare(dosar.numardosar, "", "", dosar.institutie);
     
                 if (Number(new Date(dosar.dosardata.dataModificare.split("T")[0] + "T00:00:00.000Z")) != Number(new Date(newDosar[0].dataModificare.toISOString().split("T")[0] + "T00:00:00.000Z"))) {
                     await handleChange(dosar.userid, newDosar[0], sendArr)
@@ -216,7 +218,7 @@ async function toRun() {
 
         dosare = await findDosare();
         dosare.forEach(dosar => {
-            jsonData = JSON.parse(dosar.dosardata);
+            var jsonData = JSON.parse(dosar.dosardata);
             dosar.dosardata = jsonData
         });
 
@@ -267,4 +269,4 @@ async function toRun() {
     }
 }
 
-module.exports = toRun;
+export default toRun;

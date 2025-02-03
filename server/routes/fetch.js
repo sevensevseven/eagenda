@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const router = require("express").Router();
-const db = require("../db")
+const db = require("../db").default
 
 function parseJwt (token) {
     return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());

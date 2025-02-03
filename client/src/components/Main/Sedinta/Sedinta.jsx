@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styles from "./styles.module.css"
 
 const Sedinta = ({ data, changeView, numar, ora }) => {
@@ -38,6 +39,13 @@ const Sedinta = ({ data, changeView, numar, ora }) => {
             </div>
         </div>
     )
+}
+
+Sedinta.propTypes = {
+    data: PropTypes.array.isRequired,
+    changeView: PropTypes.func.isRequired,
+    numar: PropTypes.any.isRequired,
+    ora: PropTypes.any.isRequired
 }
 
 export default Sedinta

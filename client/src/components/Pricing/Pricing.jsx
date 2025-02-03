@@ -1,9 +1,11 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import PropTypes from 'prop-types'
 import styles from "./styles.module.css";
 // import { useSession } from 'next-auth/react';
 
 // Stripe Plans >> fill in your own priceId & link
+// TODO(razvan): Incarca planurile de pe server
 export const plans = [
     {
         link: process.env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_7sIcPvg7ucm7cec9AA' : '',
@@ -175,5 +177,9 @@ const Pricing = ({ uid }) => {
         </div>
     );
 };
+
+Pricing.propTypes = {
+    uid: PropTypes.string.isRequired
+}
 
 export default Pricing;

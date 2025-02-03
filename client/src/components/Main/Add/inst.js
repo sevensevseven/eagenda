@@ -1,3 +1,4 @@
+// TODO(razvan): Recupereaza astea de pe server
 const inst = {
     CurteadeApelBUCURESTI: 'CurteadeApelBUCURESTI',
     TribunalulBUCURESTI: 'TribunalulBUCURESTI',

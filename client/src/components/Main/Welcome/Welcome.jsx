@@ -1,8 +1,9 @@
-import React, { useMemo, useState } from 'react'
-import styles from "./styles.module.css"
+import React, { useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
+import PropTypes from 'prop-types'
 import axios from 'axios'
-import Pricing from '../../Pricing/Pricing'
+
+import styles from './styles.module.css'
 
 const Welcome = ({ userInfo, f }) => {
     const isSmall = useMediaQuery({ query: `(max-width: 700px)`})
@@ -75,9 +76,9 @@ const Welcome = ({ userInfo, f }) => {
             </h1>
             <h4>Pentru a incepe, apasati unul din butoanele de mai jos...</h4>
             <div className={!isSmall ? "w-25 d-flex flex-column my-2" : !isMobile ? "w-50 d-flex flex-column my-2" : "w-100 d-flex flex-column my-2"}>
-                <button className='btn btn-primary my-2' onClick={e => f(1)}>Calendar</button>
-                <button className='btn btn-primary my-2' onClick={e => f(2)}>Adaugare Dosare</button>
-                <button className='btn btn-primary my-2' onClick={e => f(3)}>Lista Dosare</button>
+                <button className='btn btn-primary my-2' onClick={() => f(1)}>Calendar</button>
+                <button className='btn btn-primary my-2' onClick={() => f(2)}>Adaugare Dosare</button>
+                <button className='btn btn-primary my-2' onClick={() => f(3)}>Lista Dosare</button>
             </div>
             <h4 className='mt-3'>Sau evaluati-va <strong>setarile</strong> aici</h4>
             <div>
@@ -101,6 +102,11 @@ const Welcome = ({ userInfo, f }) => {
             </div>
         </div>
     )
+}
+
+Welcome.propTypes = {
+    userInfo: PropTypes.object.isRequired,
+    f: PropTypes.func.isRequired
 }
 
 export default Welcome

@@ -1,9 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import styles from "./styles.module.css"
 import Sedinta from '../Sedinta/Sedinta';
 
-const List = ({ userid, f }) => {
+const List = ({ userid }) => {
     const [dosare, setDosare] = useState([])
     const [error, setError] = useState("");
     const [deleted, setDeleted] = useState(true)
@@ -190,7 +191,7 @@ const List = ({ userid, f }) => {
 
         function searchInObject(obj, parent) {
             for (let key in obj) {
-                if (obj.hasOwnProperty(key)) {
+                if (Object.prototype.hasOwnProperty.call(obj, key)) {
                     var value = obj[key];
 
                     if (typeof value === 'string') value = value.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -313,7 +314,7 @@ const List = ({ userid, f }) => {
                                                         {typeof dosar.sedinte != "undefined" ? <> {
                                                             dosar.sedinte.DosarSedinta.map((sedinta, index) => {
                                                                 return (
-                                                                    <div>
+                                                                    <div key={index}>
                                                                         <div className="card mb-3">
                                                                             <div className="card-body">
                                                                                 {/* First Text Section */}
@@ -353,8 +354,8 @@ const List = ({ userid, f }) => {
                                             <div className="mt-4">
                                                 <div className="d-flex justify-content-between align-items-center">
                                                     <div>
-                                                        <button className="btn btn-danger my-2 mr-2" onClick={e => handleDelete(dosar)}>Sterge</button>
-                                                        <button className="btn btn-success my-2 mr-2" onClick={e => handleRefresh(dosar, index)}>{!refreshed.state && index == refreshed.index ? "Refreshing..." : "Refresh"}</button>
+                                                        <button className="btn btn-danger my-2 mr-2" onClick={() => handleDelete(dosar)}>Sterge</button>
+                                                        <button className="btn btn-success my-2 mr-2" onClick={() => handleRefresh(dosar, index)}>{!refreshed.state && index == refreshed.index ? "Refreshing..." : "Refresh"}</button>
                                                     </div>
                                                     <div>
                                                         <p className="fst-italic mb-0">
@@ -378,6 +379,10 @@ const List = ({ userid, f }) => {
             <p>Loading...</p>
         </div>
     )
+}
+
+List.propTypes = {
+    userid: PropTypes.any.isRequired,
 }
 
 export default List;
