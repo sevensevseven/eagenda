@@ -1,6 +1,7 @@
-const router = require("express").Router();
-const portal = require("../portal")
+import express from 'express';
+import portal from '../portal.js';
 
+const router = express.Router();
 router.post("/", async (req, res) => {
     try {
         
@@ -13,4 +14,4 @@ router.post("/", async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

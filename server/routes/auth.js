@@ -1,8 +1,12 @@
-const router = require("express").Router();
-const joi = require("joi");
-const bcrypt = require("bcrypt");
-const db = require("../db").default;
-const jwt = require("jsonwebtoken")
+import express from 'express';
+import joi from 'joi'
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken';
+import process from 'process';
+
+import db from '../db.js';
+
+const router = express.Router();
 
 function findUser(email) {
     return new Promise((resolve, reject) => {
@@ -50,4 +54,4 @@ const validate = (data) => {
     return schema.validate(data);
 }
 
-module.exports = router;
+export default router;

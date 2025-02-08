@@ -1,7 +1,8 @@
-const router = require("express").Router();
-const db = require("../db").default;
-const Portal = require("../portal");
+import express from 'express';
+import db from '../db.js';
+import portal from '../portal.js';
 
+const router = express.Router();
 function updateDosar(requestbody, dosardata) {
     return new Promise((resolve, reject) => {
         const sql =
@@ -16,7 +17,7 @@ function updateDosar(requestbody, dosardata) {
 
 router.post("/", async (req, res) => {
     try {
-        const newDosar = await Portal.cautareDosare(req.body.numardosar, "", "", req.body.institutie);
+        const newDosar = await portal.cautareDosare(req.body.numardosar, "", "", req.body.institutie);
 
         await updateDosar(req.body, newDosar[0])
         res.status(201).send({message: "Dosar updated successfully!"});
@@ -26,4 +27,4 @@ router.post("/", async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

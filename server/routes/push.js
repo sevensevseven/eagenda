@@ -1,6 +1,7 @@
-const router = require("express").Router();
-const db = require("../db").default
+import express from 'express';
+import  db from "../db.js";
 
+const router = express.Router();
 function createDosar(requestbody) {
     return new Promise((resolve, reject) => {
         const sql =
@@ -36,4 +37,4 @@ router.post("/", async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

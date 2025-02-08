@@ -1,5 +1,7 @@
-const router = require("express").Router();
-const db = require("../db").default
+import express from 'express';
+import db from "../db.js";
+
+const router = express.Router();
 
 function findDosare(uid) {
     return new Promise((resolve, reject) => {
@@ -16,7 +18,7 @@ router.post("/", async (req, res) => {
         const dosare = await findDosare(req.body.uid);
 
         dosare.forEach(dosar => {
-            jsonData = JSON.parse(dosar.dosardata);
+            const jsonData = JSON.parse(dosar.dosardata);
             dosar.dosardata = jsonData
         });
 
@@ -27,4 +29,4 @@ router.post("/", async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

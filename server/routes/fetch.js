@@ -1,6 +1,8 @@
-const jwt = require('jsonwebtoken');
-const router = require("express").Router();
-const db = require("../db").default
+import express from 'express';
+import {Buffer} from 'buffer';
+import db from "../db.js";
+
+const router = express.Router();
 
 function parseJwt (token) {
     return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
@@ -31,4 +33,4 @@ router.post("/", async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

@@ -2,8 +2,8 @@ import joi from "joi"
 import passwordComplexity from "joi-password-complexity"
 import express from "express"
 import bcrypt from "bcrypt"
-import db from "../db"
 import process from "process"
+import db from "../db.js"
 
 const router = express.Router();
 

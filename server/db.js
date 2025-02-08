@@ -20,4 +20,4 @@ const db = createPool({
     queueLimit: 0
 });
 
-export default db
+export default db;

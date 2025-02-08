@@ -1,5 +1,7 @@
-const router = require("express").Router();
-const db = require("../db").default
+import express from 'express';
+import db from '../db.js';
+
+const router = express.Router();
 
 function createNotita(requestbody) {
     return new Promise((resolve, reject) => {
@@ -51,4 +53,4 @@ router.post("/", async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

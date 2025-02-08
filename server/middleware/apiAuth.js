@@ -1,4 +1,5 @@
-const jwt = require('jsonwebtoken'); 
+import process from 'process';
+import jwt from 'jsonwebtoken'; 
 
 const authenticateJWT = (req, res, next) => {
     if (['/api/auth', '/api/users', '/api/webhook'].includes(req.path)) {
@@ -24,4 +25,4 @@ const authenticateJWT = (req, res, next) => {
     });
 };
 
-module.exports = authenticateJWT;
+export default authenticateJWT;

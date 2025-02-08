@@ -1,4 +1,4 @@
-const { rateLimit } = require("express-rate-limit");
+import { rateLimit } from "express-rate-limit";
 
 const rateLimitMiddleware = rateLimit({
   windowMs: 60 * 1000,
@@ -8,4 +8,4 @@ const rateLimitMiddleware = rateLimit({
   legacyHeaders: false
 });
 
-module.exports = rateLimitMiddleware;
+export default rateLimitMiddleware;

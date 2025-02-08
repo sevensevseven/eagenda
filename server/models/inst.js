@@ -245,6 +245,6 @@ const inst = {
     TribunalulpentruminoriSifamilieBRASOV: 'TribunalulpentruminoriSifamilieBRASOV',
     JudecatoriaCORNETU: 'JudecatoriaCORNETU',
     JudecatoriaJIBOU: 'JudecatoriaJIBOU'
-}
+};
 
-module.exports = inst
+export default inst;

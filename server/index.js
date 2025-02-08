@@ -2,30 +2,28 @@
 // AUTH WILL GET TOKEN AND VERIFY IS SUBBED (BY CHECKING CUSTOMER WITH STRIPE) AND AFTER EVERYTHING SEND A STATE INT BACK THAT WILL INDICATE WHAT FRONTEND WILL DISPLAY
 
 // NB: Cheile secrete de auth pentru Stripe (preturi, webhook) sunt de test si le voi ascunde pe cele reale (cand dau drumul pe bani) in fisiere .env
-
-
 import dotenv from "dotenv";
 import express from "express";
-import cors from "cors"
-import cron from "node-cron"
+import cors from "cors";
+import cron from "node-cron";
 
 
-import userRoutes from "./routes/users"
-import authRoutes from "./routes/auth"
-import fetchRoutes from "./routes/fetch"
-import searchRoutes from "./routes/search"
-import pushRoutes from "./routes/push"
-import listRoutes from "./routes/list"
-import deleteRoutes from "./routes/delete"
-import refreshRoutes from "./routes/refresh"
-import changeemailmodificariRoutes from "./routes/changeemailmodificari"
-import listasedintaRoutes from "./routes/listasedinta"
-import addnotitaRoutes from "./routes/addnotita"
-import getnotitaRoutes from "./routes/getnotita"
-import rateLimitMiddleware from "./middleware/rateLimit";
-import authenticateJWT from "./middleware/apiAuth";
-import torun from "./jobmodificari"
-import db from "./db"
+import userRoutes from "./routes/users.js";
+import authRoutes from "./routes/auth.js";
+import fetchRoutes from "./routes/fetch.js";
+import searchRoutes from "./routes/search.js";
+import pushRoutes from "./routes/push.js";
+import listRoutes from "./routes/list.js";
+import deleteRoutes from "./routes/delete.js";
+import refreshRoutes from "./routes/refresh.js"
+import changeemailmodificariRoutes from "./routes/changeemailmodificari.js";
+import listasedintaRoutes from "./routes/listasedinta.js";
+import addnotitaRoutes from "./routes/addnotita.js";
+import getnotitaRoutes from "./routes/getnotita.js";
+import rateLimitMiddleware from "./middleware/rateLimit.js";
+import authenticateJWT from "./middleware/apiAuth.js";
+import torun from "./jobmodificari.js";
+import db from "./db.js";
 
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

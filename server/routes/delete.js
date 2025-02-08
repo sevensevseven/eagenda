@@ -1,5 +1,7 @@
-const router = require("express").Router();
-const db = require("../db").default
+import express from "express";
+import db from "../db.js";
+
+const router = express.Router();
 
 function deleteDosar(reqbody) {
     return new Promise((resolve, reject) => {
@@ -22,4 +24,4 @@ router.post("/", async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;
