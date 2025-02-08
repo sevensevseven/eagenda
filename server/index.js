@@ -265,4 +265,7 @@ app.use("/api/getnotita", getnotitaRoutes);
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
+// TODO(razvan): Pare ca functia poate primi o data, probabil data la care e invocata
+// Mai sunt 2 stringuri ca alternativa dar care probabil ca nu conteaza
+// Exista si al treilea parametru prin care se poate configura timezone-ul pentru data
 cron.schedule("*/5 * * * *", () => torun())

@@ -9,6 +9,8 @@ import { createPool } from "mysql2";
 //     database: "law"
 // })
 
+// TODO(razvan): Poate avem nevoie de o abstractie aici ca sa rulam cu o baza de date in memorie sau locala (sqlite) in teste
+// Ar fi utila si in analiza datelor primite de la portal
 const db = createPool({
     host: process.env.MYSQLHOST,
     port: process.env.MYSQLPORT,

@@ -10,6 +10,17 @@ const mailjet = new MailJet({
     apiSecret: 'aed8073571934eaba3ee7881a3b4b99c'
 })
 
+// TODO(razvan): De explorat variante:
+// 1. Introducem limit si offset ca parametri optionali => mai multe query-uri sa parcurgem tabela (probleme daca datele se schimba intre query-uri)
+// 2. Folosim stream care pare mai complicat => un singur query doar ca putem limita numarul de elemente aduse in memorie
+// Alte optimizari (au sens cand stim ca avem multi useri cu un nr. semnificativ de dosare):
+// 1. Informatiile despre user pare ca sunt necesare intotdeauna deci putem grupa dupa userid ca sa reducem nr de query-uri catre tabela de useri
+// 1.1. Presupunand ca userii au cate n dosare, daca ordinea dosarelor e aleatoare, facem cate un query per dosar ca sa obtinem informatiile user-ului
+// 1.2. Grupand dupa userid, avem 1 query pentru fiecare grup de dosare (query pt informatiile user-uli doar la tranzitia catre alt grup de dosare)
+// Alte observatii:
+// 1. Poate ca dosarele pot fi solutionate => nu mai apar schimbari deci pot fi omise din start
+// 2. Poate ca dosarele pot fi clasificate dupa importanta => cadenta diferita a verificarii
+// 3. Pentru cele solutionate, poate ca o categorie speciala poate fi introdusa ca sa fie incluse totusi, la dorinta utilizatorului, in rundele de verificari.
 function findDosare() {
     return new Promise((resolve, reject) => {
         const sql = "SELECT * FROM `dosare` WHERE 1";
@@ -24,6 +35,8 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// TODO(razvan): Cred ca putem explora o varianta in care sa facem conversia direct
+// Motivul principal este ca din structura rezultatului avem de-a face cu formatul ISO
 function convertDate(toBeConverted) {
     let gmtDate = typeof toBeConverted == "string" ? new Date(toBeConverted) : toBeConverted instanceof Date ? toBeConverted : null;
 
@@ -169,10 +182,12 @@ function millisecondsToDays(milliseconds) {
     return milliseconds / millisecondsInADay;
 }
 
+// TODO(razvan): aici putem primi data curenta ca parametru
 async function toRun() {
     try {
         var sendArr = [];
 
+// >> Potentiala problema de consum crescut de memorie
         var dosare = await findDosare();
         console.log(`Fetched ${dosare.length} dosare`)
 
@@ -183,10 +198,11 @@ async function toRun() {
         console.log(`Parsed string to JSON`)
 
         const chunks = chunkArray(dosare, 300);
-
+// << Incarcam intreg continutul tabelei in memorie
         var index = 0;
         var changes = 0;
         console.log("Updating " + dosare.length + " dosare")
+// >> Prima operatie pe continutul tabelei
         for (const chunk of chunks) {
             var updatePromises = chunk.map(async dosar => {
                 if (index > 0 && index % 300 == 0) await sleep(15 * 1000);
@@ -215,16 +231,20 @@ async function toRun() {
                 await sleep(15000);
             }
         }
+// <<
         console.log("\nUpdated " + index + " dosare at " + new Date(Date.now()).toLocaleString())
-
+// >> Alta problema potentiala 
         dosare = await findDosare();
         dosare.forEach(dosar => {
             var jsonData = JSON.parse(dosar.dosardata);
             dosar.dosardata = jsonData
         });
-
+// << Incarcam din nou in memorie
         console.log(`Now checking ${countElementsForKey(dosare, "sedinte")} sedinte`);
+// >> A doua operatie pe continutul tabelei
         const dosarePromises = dosare.map(async dosar => {
+            // TODO(razvan): Poate sedintele se pot muta in propria tabela
+            // Doar daca numarul lor este semnificativ
             if (typeof dosar.dosardata.sedinte != "undefined") {
                 const sedintePromises = dosar.dosardata.sedinte.DosarSedinta.map(async sedinta => {
                     const dataSedinta = Number(new Date(convertDate(sedinta.data).split('T')[0] + "T" + sedinta.ora + ":00.000"));
@@ -244,6 +264,7 @@ async function toRun() {
             }
             await updatelastcheckedsedinte(dosar.userid, dosar.dosarid)
         })
+// << Putem inlantui cu prima operatie?
 
         try {
             await Promise.all(dosarePromises);
