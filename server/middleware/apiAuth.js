@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken'); 
 
 const authenticateJWT = (req, res, next) => {
-    if (['/api/auth', '/api/users', '/api/webhook'].includes(req.path)) {
+    if (['/api/auth', '/api/users', '/api/validateToken', '/api/webhook'].includes(req.path)) {
         return next(); 
     }
 

@@ -13,7 +13,7 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      axios.post("/api/validateToken", { token })
+      axios.post("https://accomplished-nourishment-production.up.railway.app/api/validateToken", { token })
         .then(response => {
           // Expecting the backend to return an object with a 'valid' boolean property
           setShouldDisplay(response.data.valid);

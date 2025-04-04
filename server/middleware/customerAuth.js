@@ -12,7 +12,7 @@ function findUserById(id) {
 }
 
 const authorizeCustomer = async (req, res, next) => {
-    if (['/api/auth', '/api/users', '/api/fetch', '/api/webhook', '/api/create-subscription-checkout-session'].includes(req.path)) {
+    if (['/api/auth', '/api/users', '/api/fetch', '/api/validateToken', '/api/webhook', '/api/create-subscription-checkout-session'].includes(req.path)) {
         return next(); 
     }
 
