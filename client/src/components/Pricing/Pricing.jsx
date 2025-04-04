@@ -6,25 +6,25 @@ import styles from "./styles.module.css";
 // Stripe Plans >> fill in your own priceId & link
 export const plans = [
     {
-        link: process.env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_7sIcPvg7ucm7cec9AA' : '',
-        priceId: process.env.NODE_ENV === 'development' ? 'price_1PnHvVIImGcHCAj8tlYcGMao' : '',
-        price: 10,
+        link: process.env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_8wM2aR5sQ1Ht9205ko' : '',
+        priceId: process.env.NODE_ENV === 'development' ? 'price_1QvfQKIImGcHCAj8LwRejKne' : '',
+        price: 4.99,
         duration: '/ luna'
     },
     {
-        link: process.env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_fZe3eVbReeuf0vu6or' : '',
-        priceId: process.env.NODE_ENV === 'development' ? 'price_1PnIC4IImGcHCAj8KDJYO4GI' : '',
-        price: 27,
-        duration: '/ 3 luni',
-        discount: 12
+        link: process.env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_dR63eV2gEdqbba8bIN' : '',
+        priceId: process.env.NODE_ENV === 'development' ? 'price_1QvfR1IImGcHCAj8Axa8MAmM' : '',
+        price: 27.99,
+        duration: '/ 6 luni',
+        discount: 6,
     },
     {
-        link: process.env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_eVa5n308w71N5PO146' : '',
-        priceId: process.env.NODE_ENV === 'development' ? 'price_1PnI4WIImGcHCAj83wE0BeK7' : '',
+        link: process.env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_cN2cPv5sQ5XJfqo9AG' : '',
+        priceId: process.env.NODE_ENV === 'development' ? 'price_1QvfRZIImGcHCAj8BfnJgRko' : '',
 
-        price: 100,
+        price: 49.99,
         duration: '/ an',
-        discount: 20,
+        discount: 16,
     }
 ];
 
@@ -61,11 +61,11 @@ const Pricing = ({ uid }) => {
                     <div className="flex flex-col text-center w-full mb-2">
                         <p className="font-medium text-primary mb-1">Nu sunteti inca abonat!</p>
                         <h2 className="font-bold text-3xl lg:text-4xl tracking-tight">
-                            Abonament EAgenda
+                            Abonament CuriaChronos
                         </h2>
                     </div>
 
-                    {plan?.discount ? <h5 className='text-center'>Economisesti {parseInt(plan.discount * 100 / (plans[0].price * 12))}% / an</h5> : <></>}
+                    {plan?.discount ? <h5 className='text-center'>Economisesti {plan.discount}% / an</h5> : <></>}
 
                     <div className="relative flex justify-center items-center flex-col lg:flex-row lg:items-stretch gap-8">
                         <div className=" w-full max-w-lg">
@@ -79,7 +79,7 @@ const Pricing = ({ uid }) => {
                                             type="radio"
                                             name="monthly"
                                             className="radio"
-                                            checked={plan.price === 10}
+                                            checked={plan.price === 4.99}
                                         />
                                         <span>Plata Lunara</span>
                                     </div>
@@ -91,9 +91,9 @@ const Pricing = ({ uid }) => {
                                             type="radio"
                                             name="quarterly"
                                             className="radio"
-                                            checked={plan.price === 27}
+                                            checked={plan.price === 27.99}
                                         />
-                                        <span>Plata Trimestriala</span>
+                                        <span>Plata Semestriala</span>
                                     </div>
                                     <div
                                         className="flex items-center gap-2 cursor-pointer"
@@ -103,7 +103,7 @@ const Pricing = ({ uid }) => {
                                             type="radio"
                                             name="yearly"
                                             className="radio"
-                                            checked={plan.price === 100}
+                                            checked={plan.price === 49.99}
                                         />
                                         <span>Plata Anuala</span>
                                     </div>

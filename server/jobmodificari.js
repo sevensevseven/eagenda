@@ -48,8 +48,8 @@ async function sendEmail(user) {
             "Messages":[
                 {
                     "From": {
-                        "Email": "fanejoacaceva@gmail.com",
-                        "Name": "app"
+                        "Email": "noreply@curiachronos.ro",
+                        "Name": "Notificari CuriaChronos"
                     },
                     "To": [
                         {
@@ -58,7 +58,7 @@ async function sendEmail(user) {
                         }
                     ],
                     "Subject": `Schimbare in dosare`,
-                    "TextPart": `Buna ziua, ${user.name},\n\nDorim sa te anuntam ca ${user.dosareModificate.length != 0 && user.sedinteFound.length == 0 ? `urmatoarele dosare au suferit modificari in aplicatia portal.just.ro:\n${basemodificate}` : user.dosareModificate.length == 0 && user.sedinteFound.length != 0 ? `urmatoarele sedinte urmeaza in 7 zile sau mai putin:\n${basesedinte}` : user.dosareModificate.length != 0 && user.sedinteFound.length != 0 ? `urmatoarele dosare au suferit modificari in aplicatia portal.just.ro:\n${basemodificate}\nDe asemenea, urmatoarele sedinte urmeaza in 7 zile sau mai putin:\n${basesedinte}` : ""} \nCu stima,\napp`,
+                    "TextPart": `Buna ziua, ${user.name},\n\nDorim sa te anuntam ca ${user.dosareModificate.length != 0 && user.sedinteFound.length == 0 ? `urmatoarele dosare au suferit modificari in aplicatia portal.just.ro:\n${basemodificate}` : user.dosareModificate.length == 0 && user.sedinteFound.length != 0 ? `urmatoarele sedinte urmeaza in 7 zile sau mai putin:\n${basesedinte}` : user.dosareModificate.length != 0 && user.sedinteFound.length != 0 ? `urmatoarele dosare au suferit modificari in aplicatia portal.just.ro:\n${basemodificate}\nDe asemenea, urmatoarele sedinte urmeaza in 7 zile sau mai putin:\n${basesedinte}` : ""} \nCu stima,\nCuriaChronos`,
                 }
             ]
         })

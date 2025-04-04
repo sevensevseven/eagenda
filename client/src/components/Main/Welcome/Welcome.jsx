@@ -97,7 +97,7 @@ const Welcome = ({ userInfo, f }) => {
             </div>
             <h4 className='mt-3'>Sau schimbati <strong>datele abonamentului dvs.</strong> aici</h4>
             <div>
-                <button className='btn btn-success my-3' onClick={openSubscriptionPortal}>Modificare Date Abonament</button>
+                <button className='btn btn-success my-3 mt-1' onClick={openSubscriptionPortal}>Modificare Date Abonament</button>
             </div>
         </div>
     )

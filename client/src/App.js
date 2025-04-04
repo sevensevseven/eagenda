@@ -4,13 +4,27 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import "./index.css";
 import Success from "./components/Success/Success";
-
-const isTokenExpired = token => Date.now() >= (JSON.parse(atob(token.split('.')[1]))).exp * 1000
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 function App() {
-  const user = localStorage.getItem("token");
+  const [shouldDisplay, setShouldDisplay] = useState(false);
 
-	const shouldDisplay = user ? !isTokenExpired(user) : false
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      axios.post("/api/validateToken", { token })
+        .then(response => {
+          // Expecting the backend to return an object with a 'valid' boolean property
+          setShouldDisplay(response.data.valid);
+        })
+        .catch(() => {
+          setShouldDisplay(false);
+        });
+    } else {
+      setShouldDisplay(false);
+    }
+  }, []);
 
   if (shouldDisplay) return (
     <Routes>

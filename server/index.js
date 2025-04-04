@@ -23,6 +23,7 @@ const changeemailmodificariRoutes = require("./routes/changeemailmodificari");
 const listasedintaRoutes = require("./routes/listasedinta");
 const addnotitaRoutes = require("./routes/addnotita");
 const getnotitaRoutes = require("./routes/getnotita");
+const validateTokenRoutes = require("./routes/validateToken");
 
 const rateLimitMiddleware = require("./middleware/rateLimit");
 const authenticateJWT = require('./middleware/apiAuth');
@@ -166,8 +167,8 @@ app.use(express.json());
 app.use(rateLimitMiddleware);
 app.use(authenticateJWT); 
 
-const [month, quarter, year] = 
-['price_1PnHvVIImGcHCAj8tlYcGMao', 'price_1PnIC4IImGcHCAj8KDJYO4GI', 'price_1PnI4WIImGcHCAj83wE0BeK7'];
+const [month, half, year] =
+['price_1QvfQKIImGcHCAj8LwRejKne', 'price_1QvfR1IImGcHCAj8Axa8MAmM', 'price_1QvfRZIImGcHCAj8BfnJgRko'];
 
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY)
 
@@ -193,6 +194,9 @@ const stripeSession = async(plan, uid) => {
                     quantity: 1
                 },
             ],
+            tax_id_collection: {
+                enabled: true,
+            },
             success_url: "https://curiachronos.ro/success",
             cancel_url: "https://curiachronos.ro",
             customer_email: user[0].email
@@ -206,9 +210,9 @@ const stripeSession = async(plan, uid) => {
 app.post("/api/create-subscription-checkout-session", async(req, res) => {
     const {plan, customerId} = req.body;
     let planId = null;
-    if (plan == 10) planId = month;
-    else if (plan == 27) planId = quarter;
-    else if (plan == 100) planId = year;
+    if (plan == 4.99) planId = month;
+    else if (plan == 27.99) planId = half;
+    else if (plan == 49.99) planId = year;
 
     function insertSessionIdToUser(id, sessionId) {
         return new Promise((resolve, reject) => {
@@ -259,6 +263,7 @@ app.use("/api/changeemailmodificari", changeemailmodificariRoutes);
 app.use("/api/listasedinta", listasedintaRoutes);
 app.use("/api/addnotita", addnotitaRoutes);
 app.use("/api/getnotita", getnotitaRoutes);
+app.use("/api/validateToken", validateTokenRoutes);
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`Listening on port ${port}`));

@@ -157,7 +157,7 @@ const Main = () => {
 				<div className="container mx-auto flex justify-between items-center">
 					{/* Brand/Logo */}
 					<div className="text-white font-bold text-xl cursor-pointer" onClick={e => setPage(0)}>
-						App
+						CuriaChronos
 					</div>
 
 					{/* Hamburger Icon */}
