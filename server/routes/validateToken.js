@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 
 router.post('/', (req, res) => {
-    const { token } = req.body;
+    const token = req.cookies.token;
 
     if (!token) {
         return res.status(400).json({ valid: false, error: 'No token provided.' });

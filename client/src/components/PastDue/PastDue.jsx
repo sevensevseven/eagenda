@@ -12,8 +12,7 @@ const PastDue = ({ userInfo }) => {
                 customer_id: userInfo.customer_id.slice(9)
             }, {
                 headers: {
-                    "Access-Control-Allow-Origin": "*",
-                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                    "Access-Control-Allow-Origin": "*"
                 }
             })
 

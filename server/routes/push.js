@@ -29,7 +29,7 @@ router.post("/", async (req, res) => {
         if (dosare.length != 0) return res.status(409).send({message: "Dosarul a fost deja adaugat!"});
 
         await createDosar(req.body)
-        res.status(201).send({message: "User created successfully!"});
+        res.status(201).send({message: "Dosar created successfully!"});
     } catch (error) {
         console.log(error)
         res.status(500).send({message: error.message})

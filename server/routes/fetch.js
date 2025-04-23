@@ -17,11 +17,21 @@ function findUserById(id) {
 }
 
 router.post("/", async (req, res) => {
-    const token = req.header('Authorization');
-    if (!token) return res.status(401).send('Access Denied. No token provided.');
+    // Extract token from HTTP-only cookie
+    const token = req.cookies.token;
+    if (!token) {
+        return res.status(401).send('Access Denied. No token provided.');
+    }
+
+    // Verify the token signature and expiration
+    let decoded;
+    try {
+        decoded = jwt.verify(token, process.env.JWTPRIVATEKEY);
+    } catch (err) {
+        return res.status(401).send('Invalid or expired token.');
+    }
 
     try {
-        const decoded = parseJwt(token.split(' ')[1])
         const user = await findUserById(decoded.id);
         
         res.status(200).send(user);

@@ -6,7 +6,6 @@
 require("dotenv").config();
 
 const express = require("express");
-const router = express.Router();
 const app = express();
 const cors = require("cors");
 const cron = require("node-cron");
@@ -24,6 +23,7 @@ const listasedintaRoutes = require("./routes/listasedinta");
 const addnotitaRoutes = require("./routes/addnotita");
 const getnotitaRoutes = require("./routes/getnotita");
 const validateTokenRoutes = require("./routes/validateToken");
+const logoutRoutes = require("./routes/logout");
 
 const rateLimitMiddleware = require("./middleware/rateLimit");
 const authenticateJWT = require('./middleware/apiAuth');
@@ -32,11 +32,27 @@ const stripeWebhookRoute = express.Router();
 
 const torun = require("./jobmodificari");
 const db = require("./db");
+const cookieParser = require("cookie-parser");
 
-app.use(cors());
+const allowed = [
+    "https://curiachronos.ro",        // e.g. https://app.yourdomain.com
+    'http://localhost:3000'   // if you have another frontend for the Stripe portal
+];
+  
+
+app.use(cors({
+    origin: (incomingOrigin, cb) => {
+        if (allowed.includes(incomingOrigin)) cb(null, true);
+        else cb(new Error('Not allowed by CORS'));
+    },
+    credentials: true
+}));
+
+app.use(cookieParser());
 
 stripeWebhookRoute.post(
     '/',
+    cors(),
     express.raw({ type: 'application/json' }),
     async (request, response) => {
         function handleDelete(customer_id) {
@@ -162,7 +178,7 @@ app.use("/api/webhook", stripeWebhookRoute);
 app.set('trust proxy', 1);
 
 // TODO: UPGRADE LIMIT TO 50MB BECAUSE SOMETIMES 413 IS THROWN
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
 
 app.use(rateLimitMiddleware);
 app.use(authenticateJWT); 
@@ -264,6 +280,7 @@ app.use("/api/listasedinta", listasedintaRoutes);
 app.use("/api/addnotita", addnotitaRoutes);
 app.use("/api/getnotita", getnotitaRoutes);
 app.use("/api/validateToken", validateTokenRoutes);
+app.use("/api/logout", logoutRoutes);
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`Listening on port ${port}`));

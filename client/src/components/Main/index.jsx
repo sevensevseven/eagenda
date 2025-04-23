@@ -9,6 +9,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import Welcome from "./Welcome/Welcome"
 import Pricing from "../Pricing/Pricing";
 import PastDue from "../PastDue/PastDue";
+import { useNavigate } from "react-router-dom";
 
 const Main = () => {
 	const [userInfo, setUserInfo] = useState({});
@@ -20,25 +21,27 @@ const Main = () => {
 	const [isVisible, setIsVisible] = useState(true);
 	const isScrollingVisible = useRef(true);
 	const navbarRef = useRef(null);
+	const navigate = useNavigate();
 
 	const handleLogout = () => {
-		localStorage.removeItem("token");
-		window.location.reload();
+		axios
+			.post('https://accomplished-nourishment-production.up.railway.app/api/logout', {}, { withCredentials: true })
+			.then(() => {
+				// Optionally clear any client-side state here
+				navigate('/login');
+			})
+			.catch(err => {
+				console.error('Logout failed', err);
+			});
 	};
 
 	const fetchInfo = (callback) => {
-		const token = localStorage.getItem('token');
-
 		try {
 			axios.post(
 				// 'http://localhost:8080/api/fetch',
 				"https://accomplished-nourishment-production.up.railway.app/api/fetch",
 				{},
-				{
-					headers: {
-						'Authorization': `Bearer ${localStorage.getItem('token')}`
-					}
-				}
+				{ withCredentials: true }
 			).then(response => {
 				callback(null, response.data[0]);
 			});
@@ -48,16 +51,6 @@ const Main = () => {
 		}
 	};
 
-	// const listenToScroll = () => {
-	// 	let heightToHideFrom = 1;
-	// 	const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-	
-	// 	if (winScroll > heightToHideFrom) {  
-	// 		isVisible && setIsVisible(false);
-	// 	} else {
-	// 		setIsVisible(true);
-	// 	}  
-	// };
 	const toggleMenu = () => {
         isOpenRef.current = !isOpenRef.current;
         if (navbarRef.current) {
@@ -66,18 +59,18 @@ const Main = () => {
     };
 
     useEffect(() => {
-        const listenToScroll = () => {
-            const heightToHideFrom = 1;
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        // const listenToScroll = () => {
+        //     const heightToHideFrom = 1;
+        //     const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
 
-            const newVisibility = winScroll <= heightToHideFrom;
-            if (isScrollingVisible.current !== newVisibility) {
-                isScrollingVisible.current = newVisibility;
-                if (navbarRef.current) {
-                    navbarRef.current.style.display = newVisibility && isOpenRef.current ? "block" : "none";
-                }
-            }
-        };
+        //     const newVisibility = winScroll <= heightToHideFrom;
+        //     if (isScrollingVisible.current !== newVisibility) {
+        //         isScrollingVisible.current = newVisibility;
+        //         if (navbarRef.current) {
+        //             navbarRef.current.style.display = newVisibility && isOpenRef.current ? "block" : "none";
+        //         }
+        //     }
+        // };
 
         const handleResize = () => {
             if (window.innerWidth > 768 && isOpenRef.current) {
@@ -88,11 +81,11 @@ const Main = () => {
             }
         };
 
-        window.addEventListener("scroll", listenToScroll);
+        // window.addEventListener("scroll", listenToScroll);
         window.addEventListener("resize", handleResize);
 
         return () => {
-            window.removeEventListener("scroll", listenToScroll);
+            // window.removeEventListener("scroll", listenToScroll);
             window.removeEventListener("resize", handleResize);
         };
     }, []);

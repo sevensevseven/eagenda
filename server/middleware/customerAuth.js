@@ -12,19 +12,15 @@ function findUserById(id) {
 }
 
 const authorizeCustomer = async (req, res, next) => {
-    if (['/api/auth', '/api/users', '/api/fetch', '/api/validateToken', '/api/webhook', '/api/create-subscription-checkout-session'].includes(req.path)) {
+    if (['/api/auth', '/api/users', '/api/fetch', '/api/validateToken', '/api/webhook', '/api/create-subscription-checkout-session', '/api/logout'].includes(req.path)) {
         return next(); 
     }
 
-    const authHeader = req.headers.authorization;
-
-    console.log(authHeader)
-
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    // Extract token from HTTP-only cookie
+    const token = req.cookies.token;
+    if (!token) {
         return res.status(401).json({ error: 'Unauthorized: Missing or invalid token' });
     }
-
-    const token = authHeader.split(' ')[1];
 
     try {
         // Step 2: Decode the token

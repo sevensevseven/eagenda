@@ -20,6 +20,13 @@
 
 }
 
+.navbar {
+	position: sticky;
+	top: 0;
+	z-index: 9999;
+	width: 100%;
+}
+
 .navbar h1 {
 	color: white;
 	font-size: 30px;

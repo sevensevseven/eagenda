@@ -35,7 +35,17 @@ router.post("/", async (req, res) => {
     
         const token = generateAuthToken(user[0].id);
 
-        res.status(200).send({data: token, message: "Logged in successfully"});
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure:  process.env.NODE_ENV === 'production',  // true in prod
+            sameSite: process.env.NODE_ENV === 'production' 
+                       ? 'none'    // cross-site in prod
+                       : 'lax',    // first-party in dev
+            path: '/',                // make it available on all routes
+            maxAge: 3 * 24 * 60 * 60 * 1000
+        });
+
+        return res.json({ success: true });
     } catch (error) {
         res.status(500).send({message: error.message});
     }

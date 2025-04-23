@@ -20,7 +20,7 @@ router.post("/", async (req, res) => {
             dosar.dosardata = jsonData
         });
 
-        res.status(201).send({data: dosare, message: "Fetched successgfully!"});
+        res.status(201).send({data: dosare, message: "Fetched successfully!"});
     } catch (error) {
         console.log(error)
         res.status(500).send({message: error.message})
