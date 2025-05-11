@@ -1,0 +1,13 @@
+.error_msg {
+	width: 45%;
+	max-width: 45%;
+	min-width: 45%;
+	padding: 8px;
+	font-size: 13px;
+	margin-bottom: 10px;
+	margin-top: -5px;
+	background-color: #f34646;
+	color: white;
+	border-radius: 5px;
+	text-align: center;
+}

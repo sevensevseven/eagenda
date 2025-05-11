@@ -41,6 +41,7 @@ router.post("/", async (req, res) => {
             sameSite: process.env.NODE_ENV === 'production' 
                        ? 'none'    // cross-site in prod
                        : 'lax',    // first-party in dev
+            domain: '.curiachronos.ro',
             path: '/',                // make it available on all routes
             maxAge: 3 * 24 * 60 * 60 * 1000
         });

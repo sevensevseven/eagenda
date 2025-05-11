@@ -9,7 +9,6 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import Welcome from "./Welcome/Welcome"
 import Pricing from "../Pricing/Pricing";
 import PastDue from "../PastDue/PastDue";
-import { useNavigate } from "react-router-dom";
 
 const Main = () => {
 	const [userInfo, setUserInfo] = useState({});
@@ -21,14 +20,13 @@ const Main = () => {
 	const [isVisible, setIsVisible] = useState(true);
 	const isScrollingVisible = useRef(true);
 	const navbarRef = useRef(null);
-	const navigate = useNavigate();
 
 	const handleLogout = () => {
 		axios
-			.post('https://accomplished-nourishment-production.up.railway.app/api/logout', {}, { withCredentials: true })
+			.post('/api/logout', {}, { withCredentials: true })
 			.then(() => {
 				// Optionally clear any client-side state here
-				navigate('/login');
+				window.location = "/login";
 			})
 			.catch(err => {
 				console.error('Logout failed', err);
@@ -39,7 +37,7 @@ const Main = () => {
 		try {
 			axios.post(
 				// 'http://localhost:8080/api/fetch',
-				"https://accomplished-nourishment-production.up.railway.app/api/fetch",
+				"/api/fetch",
 				{},
 				{ withCredentials: true }
 			).then(response => {
@@ -98,7 +96,7 @@ const Main = () => {
 				console.error("Login error: ", err);
 			} else {
 				// if (query.get('success')) {
-				// 	axios.post("https://accomplished-nourishment-production.up.railway.app/api/payment-success", {
+				// 	axios.post("/api/payment-success", {
 				// 		sessionId: query.get("session_id"),
 				// 		uid: data.id
 				// 	})
@@ -192,7 +190,7 @@ const Main = () => {
 				</div>
 			</nav>
 			{/* Mobile Menu */}
-			<div ref={navbarRef} className={`md:hidden fixed w-screen`} style={{display: "none", backgroundColor: "#1A2130", zIndex: 999999999}}>
+			<div ref={navbarRef} className={`md:hidden fixed w-screen`} style={{display: "none", backgroundColor: "#0F0F0F", zIndex: 999999999}}>
 				{subbed ? <><div className="block py-2 px-4 text-white hover:text-gray-300 cursor-pointer" onClick={e => setPage(1)}>Calendar</div>
 				<div className="block py-2 px-4 text-white hover:text-gray-300 cursor-pointer" onClick={e => setPage(2)}>Adauga Dosare</div>
 				<div className="block py-2 px-4 text-white hover:text-gray-300 cursor-pointer" onClick={e => setPage(3)}>Lista Dosare</div></> : <></>}

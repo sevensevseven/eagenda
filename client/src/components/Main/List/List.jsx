@@ -64,7 +64,7 @@ const List = ({ userid, f }) => {
                 setDeleted(false)
                 setFinished(false);
                 // const url = "http://localhost:8080/api/list";
-                const url = "https://accomplished-nourishment-production.up.railway.app/api/list"
+                const url = "/api/list"
 
                 axios.post(url, {
                     uid: userid,
@@ -97,7 +97,7 @@ const List = ({ userid, f }) => {
         try {
             setError('')
             // const url = "http://localhost:8080/api/delete";
-            const url = "https://accomplished-nourishment-production.up.railway.app/api/delete"
+            const url = "/api/delete"
 
             const res = await axios.post(url, {
                 uid: userid,
@@ -119,7 +119,7 @@ const List = ({ userid, f }) => {
         try {
             setError("")
             // const url = "http://localhost:8080/api/refresh";
-            const url = "https://accomplished-nourishment-production.up.railway.app/api/refresh"
+            const url = "/api/refresh"
 
             const res = await axios.post(url, {
                 userid: userid,
@@ -141,7 +141,7 @@ const List = ({ userid, f }) => {
         setViewSedinta(true);
         setFinished(false);
 
-        const url = "https://accomplished-nourishment-production.up.railway.app/api/listasedinta"
+        const url = "/api/listasedinta"
 
         axios.post(url, {
             dataSedinta: dataSedinta,

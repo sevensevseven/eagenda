@@ -12,7 +12,7 @@ function findUserById(id) {
 }
 
 const authorizeCustomer = async (req, res, next) => {
-    if (['/api/auth', '/api/users', '/api/fetch', '/api/validateToken', '/api/webhook', '/api/create-subscription-checkout-session', '/api/logout'].includes(req.path)) {
+    if (['/api/auth', '/api/users', '/api/fetch', '/api/validateToken', '/api/webhook', '/api/create-subscription-checkout-session', '/api/logout', '/api/captcha', '/api/verifyEmail', '/api/compareCodes', '/api/deleteAccount', '/api/fetchUIDFromCustomerCookie'].includes(req.path)) {
         return next(); 
     }
 

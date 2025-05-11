@@ -16,7 +16,7 @@ const Welcome = ({ userInfo, f }) => {
         setSaved(false);
         try {
             // const url = "http://localhost:8080/api/changeemailmodificari";
-            const url = "https://accomplished-nourishment-production.up.railway.app/api/changeemailmodificari"
+            const url = "/api/changeemailmodificari"
 
             await axios.post(url, {
                 emailmodificari: notif,
@@ -38,14 +38,10 @@ const Welcome = ({ userInfo, f }) => {
     async function openSubscriptionPortal() {
         try {
             // const url = "http://localhost:8080/api/changeemailmodificari";
-            const url = "https://accomplished-nourishment-production.up.railway.app/api/create-portal-session"
+            const url = "/api/create-portal-session"
 
             const res = await axios.post(url, {
                 customer_id: userInfo.customer_id
-            }, {
-                headers: {
-                    "Access-Control-Allow-Origin": "*"
-                }
             })
 
             // console.log(res.data)

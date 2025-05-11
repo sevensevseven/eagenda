@@ -29,7 +29,7 @@ export const plans = [
 ];
 
 const checkout = (plan, uid) => {
-    axios.post("https://accomplished-nourishment-production.up.railway.app/api/create-subscription-checkout-session", {
+    axios.post("/api/create-subscription-checkout-session", {
         plan: plan,
         customerId: uid
     })

@@ -6,6 +6,7 @@ import App from './App';
 import axios from 'axios';
 
 axios.defaults.withCredentials = true;
+axios.defaults.baseURL = "https://api.curiachronos.ro";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

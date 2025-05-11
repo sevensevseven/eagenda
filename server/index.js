@@ -24,6 +24,12 @@ const addnotitaRoutes = require("./routes/addnotita");
 const getnotitaRoutes = require("./routes/getnotita");
 const validateTokenRoutes = require("./routes/validateToken");
 const logoutRoutes = require("./routes/logout");
+const captchaRoutes = require("./routes/captcha");
+const verifyEmailRoutes = require("./routes/verifyEmail");
+const compareCodesRoutes = require("./routes/compareCodes");
+const deleteAccountRoutes = require("./routes/deleteAccount");
+const deleteAccountIdRoutes = require("./routes/deleteAccountId");
+const fetchUIDFromTempCookieRoutes = require("./routes/fetchUIDFromTempCookie");
 
 const rateLimitMiddleware = require("./middleware/rateLimit");
 const authenticateJWT = require('./middleware/apiAuth');
@@ -31,20 +37,19 @@ const authenticateJWT = require('./middleware/apiAuth');
 const stripeWebhookRoute = express.Router();
 
 const torun = require("./jobmodificari");
+const cleanup = require("./cleanup");
 const db = require("./db");
 const cookieParser = require("cookie-parser");
 
 const allowed = [
     "https://curiachronos.ro",        // e.g. https://app.yourdomain.com
+    "https://api.curiachronos.ro",
     'http://localhost:3000'   // if you have another frontend for the Stripe portal
 ];
   
 
 app.use(cors({
-    origin: (incomingOrigin, cb) => {
-        if (allowed.includes(incomingOrigin)) cb(null, true);
-        else cb(new Error('Not allowed by CORS'));
-    },
+    origin: allowed,
     credentials: true
 }));
 
@@ -55,16 +60,6 @@ stripeWebhookRoute.post(
     cors(),
     express.raw({ type: 'application/json' }),
     async (request, response) => {
-        function handleDelete(customer_id) {
-            return new Promise((resolve, reject) => {
-                const sql = "UPDATE `users` SET `customer_id`=?, `emailmodificari`=?, `emailsedinte`=? WHERE `customer_id`=?";
-                db.query(sql, [null, 0, 0, customer_id], (err, result) => {
-                    if (err) reject(err);
-                    resolve(result)
-                });
-            })
-        }
-
         function handleSuccess(customer_id, email) {
             return new Promise((resolve, reject) => {
                 const sql = "UPDATE `users` SET `customer_id`=?, `emailmodificari`=?, `emailsedinte`=? WHERE `email`=?";
@@ -132,14 +127,18 @@ stripeWebhookRoute.post(
                 subscription = event.data.object;
                 status = subscription.status;
                 console.log(`Deleted - Subscription status is ${status}.`);
-                
-                await handleDelete(subscription.customer);
+
+                await new Promise((resolve, reject) => {
+                    db.query("DELETE FROM users WHERE customer_id = ?", [subscription.customer], (err, result) => {
+                        if (err) reject(err);
+                        resolve(result);
+                    });
+                });
 
                 const customer = await stripe.customers.retrieve(subscription.customer);
                 const user = await findUserByEmail(customer.email);
 
-                // TODO IMPORTANT: UNCOMMENT WHEN APP IS LIVE
-                // await deleteDosare(user[0].id);
+                await deleteDosare(user[0].id);
 
                 break;
             case 'customer.subscription.created':
@@ -166,6 +165,41 @@ stripeWebhookRoute.post(
                 }
 
                 break;
+            // case 'checkout.session.expired':
+            //     const session = event.data.object;
+            //     const userId = session.metadata?.userId;
+            //     if (userId) {
+            //         try {
+            //             // Get the user's customer_id by id
+            //             const users = await new Promise((resolve, reject) => {
+            //                 db.query("SELECT customer_id FROM users WHERE id = ?", [userId], (err, result) => {
+            //                     if (err) reject(err);
+            //                     resolve(result);
+            //                 });
+            //             });
+
+            //             const user = users[0];
+            //             if (!user) break;
+
+            //             const customerId = user.customer_id;
+
+            //             // Only delete if the customer_id matches this expired session
+            //             if (customerId === session.id) {
+            //                 await new Promise((resolve, reject) => {
+            //                     db.query("DELETE FROM users WHERE id = ?", [userId], (err, result) => {
+            //                         if (err) reject(err);
+            //                         else resolve(result);
+            //                     });
+            //                 });
+            //                 console.log(`Deleted user with ID ${userId} due to session expiration`);
+            //             } else {
+            //                 console.log(`Session ${session.id} expired but user has newer session/customer ID: ${customerId}`);
+            //             }
+            //         } catch (err) {
+            //             console.error("Error handling expired session cleanup:", err);
+            //         }
+            //     }
+            //     break;
             default:
                 console.log(`Unhandled event type ${event.type}.`);
         }
@@ -214,8 +248,11 @@ const stripeSession = async(plan, uid) => {
                 enabled: true,
             },
             success_url: "https://curiachronos.ro/success",
-            cancel_url: "https://curiachronos.ro",
-            customer_email: user[0].email
+            cancel_url: `https://curiachronos.ro/canceled?value=${uid}`,
+            metadata: {
+                userId: uid.toString()
+            },
+            customer_email: user[0].email,
         });
         return session;
     } catch (e){
@@ -238,6 +275,17 @@ app.post("/api/create-subscription-checkout-session", async(req, res) => {
                 resolve(result)
             });
         })
+    }
+
+    const userCheck = await new Promise((resolve, reject) => {
+        db.query("SELECT verified FROM users WHERE id = ?", [customerId], (err, result) => {
+            if (err) reject(err);
+            resolve(result);
+        });
+    });
+
+    if (!userCheck.length || userCheck[0].verified !== 1) {
+        return res.status(403).json({ error: "Account is not verified." });
     }
 
     try {
@@ -281,8 +329,15 @@ app.use("/api/addnotita", addnotitaRoutes);
 app.use("/api/getnotita", getnotitaRoutes);
 app.use("/api/validateToken", validateTokenRoutes);
 app.use("/api/logout", logoutRoutes);
+app.use("/api/captcha", captchaRoutes);
+app.use("/api/verifyEmail", verifyEmailRoutes);
+app.use("/api/compareCodes", compareCodesRoutes);
+app.use("/api/deleteAccount", deleteAccountRoutes);
+app.use("/api/deleteAccountId", deleteAccountIdRoutes);
+app.use("/api/fetchUIDFromTempCookie", fetchUIDFromTempCookieRoutes);
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
-cron.schedule("*/5 * * * *", () => torun())
+cron.schedule("*/15 * * * *", () => torun())
+cron.schedule("*/30 * * * *", () => cleanup());

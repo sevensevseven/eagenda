@@ -26,7 +26,7 @@ const Event = ({ userid, sedinte, setViewSedinta, setBold, setPropsToPass, setFi
     }
 
     useMemo(() => {
-        const url = "https://accomplished-nourishment-production.up.railway.app/api/getnotita"
+        const url = "/api/getnotita"
 
         var notitaids = [];
         sedinte.forEach(element => {
@@ -50,7 +50,7 @@ const Event = ({ userid, sedinte, setViewSedinta, setBold, setPropsToPass, setFi
         setViewSedinta(true);
         setFinished(false);
 
-        const url = "https://accomplished-nourishment-production.up.railway.app/api/listasedinta"
+        const url = "/api/listasedinta"
 
         axios.post(url, {
             dataSedinta: dataSedinta,
@@ -70,7 +70,7 @@ const Event = ({ userid, sedinte, setViewSedinta, setBold, setPropsToPass, setFi
         temp[index] = true;
         setSavingArr(temp);
 
-        const url = "https://accomplished-nourishment-production.up.railway.app/api/addnotita";
+        const url = "/api/addnotita";
 
         axios.post(url, notiteArr[notiteArr.findIndex(element => element.notitaid == notitaid)], { withCredentials: true }).then(response => {
             var temp = [...savingArr];
@@ -143,7 +143,7 @@ const AutoCalendar = ({ userid }) => {
         try {   
             setDeleted(false)
             // const url = "http://localhost:8080/api/list";
-            const url = "https://accomplished-nourishment-production.up.railway.app/api/list"
+            const url = "/api/list"
 
             axios.post(url, {
                 uid: userid,

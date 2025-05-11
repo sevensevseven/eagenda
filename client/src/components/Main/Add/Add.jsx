@@ -63,7 +63,7 @@ const Add = ({ uid }) => {
         try {
             setError("")
             // const url = "http://localhost:8080/api/search";
-            const url = "https://accomplished-nourishment-production.up.railway.app/api/search"
+            const url = "/api/search"
             const res = await axios.post(url, query, { withCredentials: true });
 
             setDosare(res.data);
@@ -99,7 +99,7 @@ const Add = ({ uid }) => {
         try {
             setError("")
             // const url = "http://localhost:8080/api/push";
-            const url = "https://accomplished-nourishment-production.up.railway.app/api/push"
+            const url = "/api/push"
             
             const res = await axios.post(url, {
                 userid: uid,
