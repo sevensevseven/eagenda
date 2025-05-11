@@ -135,10 +135,10 @@ stripeWebhookRoute.post(
                     });
                 });
 
-                const customer = await stripe.customers.retrieve(subscription.customer);
-                const user = await findUserByEmail(customer.email);
+                // const customer = await stripe.customers.retrieve(subscription.customer);
+                // const user = await findUserByEmail(customer.email);
 
-                await deleteDosare(user[0].id);
+                // await deleteDosare(user[0].id);
 
                 break;
             case 'customer.subscription.created':
