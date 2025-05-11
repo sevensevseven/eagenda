@@ -197,7 +197,7 @@ const Signup = ({ change, triggerVerifyPage, setVerificationInfo}) => {
                                     onChange={() => setRecurrence("semestrial")}
                                     className="mr-1"
                                 />
-                                Trimestrial
+                                Semestrial
                             </label>
                             <label className="flex items-center">
                                 <input

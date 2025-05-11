@@ -3,8 +3,8 @@ const Portal = require("./portal")
 const MailJet = require('node-mailjet')
 
 const mailjet = new MailJet({
-    apiKey: '4dcdbe6c6ff9a2b2c164f0d5213dc713',
-    apiSecret: 'aed8073571934eaba3ee7881a3b4b99c'
+    apiKey: process.env.MAILJET_API_KEY,
+    apiSecret: process.env.MAILJET_API_SECRET
 })
 
 function findDosare() {

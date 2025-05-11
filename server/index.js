@@ -101,7 +101,7 @@ stripeWebhookRoute.post(
         }
 
         let event = request.body;
-        const endpointSecret = 'whsec_KiusYXKr4NV1GJ4bPjT14Kii7f3BiyVL';
+        const endpointSecret = process.env.WEBHOOK_SECRET;
         if (endpointSecret) {
             const signature = request.headers['stripe-signature'];
             try {
@@ -218,7 +218,7 @@ app.use(rateLimitMiddleware);
 app.use(authenticateJWT); 
 
 const [month, half, year] =
-['price_1QvfQKIImGcHCAj8LwRejKne', 'price_1QvfR1IImGcHCAj8Axa8MAmM', 'price_1QvfRZIImGcHCAj8BfnJgRko'];
+[process.env.PRICE_MONTH, process.env.PRICE_HALF, process.env.PRICE_YEAR];
 
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY)
 
