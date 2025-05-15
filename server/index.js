@@ -134,7 +134,8 @@ stripeWebhookRoute.post(
                         resolve(result);
                     });
                 });
-
+                
+                //TODO: De implementat stergerea dupa o perioada de timp
                 // const customer = await stripe.customers.retrieve(subscription.customer);
                 // const user = await findUserByEmail(customer.email);
 
