@@ -301,13 +301,21 @@ const List = ({ userid, f }) => {
                                                                         <div className="card mb-3">
                                                                             <div className="card-body">
                                                                                 {/* First Text Section */}
-                                                                                <div className="mb-3 pb-3 border-bottom">
+                                                                                <div className="mb-3 pb-3 flex flex-row items-center justify-between border-bottom">
                                                                                     <h5 className="card-text">{('0' + new Date(convertDate(sedinta.data)).getDate()).slice(-2) + " " + months[new Date(sedinta.data).getMonth()] + " " + new Date(sedinta.data).getFullYear() + " | " + sedinta.ora}</h5>
+                                                                                    <div className='ml-2'>
+                                                                                        <a className="btn btn-secondary" href={`mailto:?body=${encodeURIComponent(sedinta.solutie + " - " + sedinta.solutieSumar)}`}>Trimite soluție pe email</a>
+                                                                                    </div>
                                                                                 </div>
 
                                                                                 {/* Second Text Section */}
                                                                                 <div className="mb-3 pb-3 border-bottom">
-                                                                                    <p className="card-text">{sedinta.solutie + " - " + sedinta.solutieSumar}</p>
+                                                                                    <p className="card-text font-bold">{sedinta.solutie + ":"}</p>
+                                                                                    {sedinta.solutieSumar.split("\n").map((line, index) => {
+                                                                                        return (
+                                                                                            line === "" ? <br/> : <p key={index} className="card-text">{line}</p>
+                                                                                        )
+                                                                                    })}
                                                                                 </div>
 
                                                                                 {/* Button Section */}
