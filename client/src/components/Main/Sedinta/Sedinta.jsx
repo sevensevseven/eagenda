@@ -23,12 +23,12 @@ const Sedinta = ({ data, changeView, numar, ora }) => {
                         {
                             data.map((sedinta, index) => {
                                 return (
-                                    <tr key={index} className = {sedinta.numar == numar ? styles.boldrow : sedinta.ora == ora ? styles.outlined_row : ""}>
-                                        <td>{sedinta.numar == numar ? <strong>{index + 1}</strong> : index + 1}</td>
-                                        <td>{sedinta.numar == numar ? <strong>{sedinta.numar}</strong> : sedinta.numar}</td>
-                                        <td>{sedinta.numar == numar ? <strong>{sedinta.categorieCazNume}</strong> : sedinta.categorieCazNume}</td>
-                                        <td>{sedinta.numar == numar ? <strong>{sedinta.stadiuProcesualNume}</strong> : sedinta.stadiuProcesualNume}</td>
-                                        <td>{sedinta.numar == numar ? <strong>{sedinta.ora}</strong> : sedinta.ora}</td>
+                                    <tr key={index} className = {sedinta.numar === numar ? styles.boldrow : sedinta.ora === ora ? styles.outlined_row : ""}>
+                                        <td>{sedinta.numar === numar ? <strong>{index + 1}</strong> : index + 1}</td>
+                                        <td>{sedinta.numar === numar ? <strong>{sedinta.numar}</strong> : sedinta.numar}</td>
+                                        <td>{sedinta.numar === numar ? <strong>{sedinta.categorieCazNume}</strong> : sedinta.categorieCazNume}</td>
+                                        <td>{sedinta.numar === numar ? <strong>{sedinta.stadiuProcesualNume}</strong> : sedinta.stadiuProcesualNume}</td>
+                                        <td>{sedinta.numar === numar ? <strong>{sedinta.ora}</strong> : sedinta.ora}</td>
                                     </tr>
                                 )
                             })

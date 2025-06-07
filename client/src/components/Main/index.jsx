@@ -4,7 +4,6 @@ import { useMemo, useState, useRef, useEffect } from "react";
 import AutoCalendar from "./Calendar/Calendar";
 import Add from "./Add/Add";
 import List from "./List/List";
-import { useMediaQuery } from "react-responsive";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Welcome from "./Welcome/Welcome"
 import Pricing from "../Pricing/Pricing";
@@ -13,12 +12,12 @@ import PastDue from "../PastDue/PastDue";
 const Main = () => {
 	const [userInfo, setUserInfo] = useState({});
 	const [page, setPage] = useState(0);
-	const isMobile = useMediaQuery({ query: `(max-width: 450px)`})
+	// const isMobile = useMediaQuery({ query: `(max-width: 450px)`})
 	const [subbed, setSubbed] = useState(false);
 	const [pastDue, setPastDue] = useState(false);
 	const isOpenRef = useRef(false); 
-	const [isVisible, setIsVisible] = useState(true);
-	const isScrollingVisible = useRef(true);
+	// const [isVisible, setIsVisible] = useState(true);
+	// const isScrollingVisible = useRef(true);
 	const navbarRef = useRef(null);
 
 	const handleLogout = () => {
@@ -89,7 +88,7 @@ const Main = () => {
     }, []);
 
 	useMemo(() => {
-		const query = new URLSearchParams(window.location.search);
+		// const query = new URLSearchParams(window.location.search);
 
 		fetchInfo((err, data) => {
 			if (err) {
@@ -199,7 +198,7 @@ const Main = () => {
 				</button>
 			</div>
 			<div>
-				{page == 0 && subbed ? <Welcome userInfo={userInfo} f={setPage} emailmodificari={userInfo.emailmodificari}/> : page == 1 && subbed ? <AutoCalendar userid={userInfo.id} /> : page == 2 && subbed ? <Add uid={userInfo.id} /> : page == 3 && subbed ? <List userid={userInfo.id} f={setPage} /> : pastDue ? <PastDue userInfo={userInfo}/> : <Pricing uid={userInfo.id} />}
+				{page === 0 && subbed ? <Welcome userInfo={userInfo} f={setPage} emailmodificari={userInfo.emailmodificari}/> : page === 1 && subbed ? <AutoCalendar userid={userInfo.id} /> : page === 2 && subbed ? <Add uid={userInfo.id} /> : page === 3 && subbed ? <List userid={userInfo.id} f={setPage} /> : pastDue ? <PastDue userInfo={userInfo}/> : <Pricing uid={userInfo.id} />}
 			</div>
 		</div>
 	);

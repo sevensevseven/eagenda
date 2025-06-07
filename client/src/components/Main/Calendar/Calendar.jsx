@@ -1,8 +1,7 @@
-import React from 'react'
 import { Calendar } from "antd"; 
 import styles from "./styles.module.css";
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useMemo } from 'react';
 import Sedinta from '../Sedinta/Sedinta';
 
@@ -15,7 +14,7 @@ const Event = ({ userid, sedinte, setViewSedinta, setBold, setPropsToPass, setFi
         arr.forEach((sedinta) => {
             if (typeof sedinta.dosare != "undefined") {
                 sedinta.dosare.SedintaDosar.forEach(element => {
-                    if (element.numar == numar) {
+                    if (element.numar === numar) {
                         var toBeReturned = sedinta.dosare.SedintaDosar
                         toBeReturned.sort((a, b) => a.ora.localeCompare(b.ora));
                         setPropsToPass(toBeReturned);
@@ -44,6 +43,7 @@ const Event = ({ userid, sedinte, setViewSedinta, setBold, setPropsToPass, setFi
             setNotiteArr(temp);
             setDone(true);
         }); 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     function viewSedinte(dataSedinta, institutie, numar, ora) {
@@ -72,7 +72,7 @@ const Event = ({ userid, sedinte, setViewSedinta, setBold, setPropsToPass, setFi
 
         const url = "/api/addnotita";
 
-        axios.post(url, notiteArr[notiteArr.findIndex(element => element.notitaid == notitaid)], { withCredentials: true }).then(response => {
+        axios.post(url, notiteArr[notiteArr.findIndex(element => element.notitaid === notitaid)], { withCredentials: true }).then(response => {
             var temp = [...savingArr];
             temp[index] = false;
             setSavingArr(temp);
@@ -98,12 +98,12 @@ const Event = ({ userid, sedinte, setViewSedinta, setBold, setPropsToPass, setFi
                                         <div style={{display: "flex", flexDirection: "column", alignItems: "flex-end"}} className='form-group'>
                                             <textarea className='form-control' style={{resize: "none", minHeight: 100}} onChange={e => {
                                                 var temp = [...notiteArr];
-                                                const i = temp.findIndex(element => element.notitaid == `${userid.toString()}+${sedinta.dosarnumar}+${sedinta.ora}+${sedinta.institutie}`)
-                                                if (i == -1) temp.push({ notitaid: `${userid.toString()}+${sedinta.dosarnumar}+${sedinta.ora}+${sedinta.institutie}`, value: e.target.value})
+                                                const i = temp.findIndex(element => element.notitaid === `${userid.toString()}+${sedinta.dosarnumar}+${sedinta.ora}+${sedinta.institutie}`)
+                                                if (i === -1) temp.push({ notitaid: `${userid.toString()}+${sedinta.dosarnumar}+${sedinta.ora}+${sedinta.institutie}`, value: e.target.value})
                                                 else temp[i] = {...temp[i], value: e.target.value};
                                                 setNotiteArr(temp);
                                             }} 
-                                            defaultValue={notiteArr[notiteArr.findIndex(element => element.notitaid == `${userid.toString()}+${sedinta.dosarnumar}+${sedinta.ora}+${sedinta.institutie}`)]?.value || ""}/>
+                                            defaultValue={notiteArr[notiteArr.findIndex(element => element.notitaid === `${userid.toString()}+${sedinta.dosarnumar}+${sedinta.ora}+${sedinta.institutie}`)]?.value || ""}/>
                                             <button className='btn btn-primary my-2' type='submit'>{savingArr[index] ? "Saving..." : "Save"}</button>
                                         </div>
                                     </form>
@@ -121,14 +121,13 @@ function search(nameKey, myArray){
     var found = [];
     
     for (let i=0; i < myArray.length; i++) {
-        if (new Date(myArray[i].data).toDateString() == nameKey) found.push(myArray[i]);
+        if (new Date(myArray[i].data).toDateString() === nameKey) found.push(myArray[i]);
     }
 
     return found;
 }
 
 const AutoCalendar = ({ userid }) => {
-    const [deleted, setDeleted] = useState(true)
     const [error, setError] = useState("");
     const [sedinte, setSedinte] = useState([])
     const [datestring, setDatestring] = useState(new Date(Date.now()).toDateString())
@@ -141,7 +140,6 @@ const AutoCalendar = ({ userid }) => {
 
     function populate(callback) {
         try {   
-            setDeleted(false)
             // const url = "http://localhost:8080/api/list";
             const url = "/api/list"
 
@@ -166,11 +164,11 @@ const AutoCalendar = ({ userid }) => {
         populate((err, response) => {
             if (err) setError(error.response.data.message)
             else {
-                response.data.data.map(d => {
+                response.data.data.forEach(d => {
                     let dosar = d.dosardata
                     if (typeof dosar.sedinte != "undefined") {
                         var arr = sedinte;
-                        dosar.sedinte.DosarSedinta.map(sedinta => {
+                        dosar.sedinte.DosarSedinta.forEach(sedinta => {
                             arr.push({
                                 dosarnumar: dosar.numar,
                                 institutie: dosar.institutie,
@@ -185,6 +183,7 @@ const AutoCalendar = ({ userid }) => {
             }
             setFinished(true);
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     if (finished) { return (

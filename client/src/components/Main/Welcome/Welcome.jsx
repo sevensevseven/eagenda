@@ -1,8 +1,7 @@
-import React, { useMemo, useState } from 'react'
+import { useState } from 'react'
 import styles from "./styles.module.css"
 import { useMediaQuery } from 'react-responsive'
 import axios from 'axios'
-import Pricing from '../../Pricing/Pricing'
 
 const Welcome = ({ userInfo, f }) => {
     const isSmall = useMediaQuery({ query: `(max-width: 700px)`})

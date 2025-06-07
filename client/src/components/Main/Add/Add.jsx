@@ -3,23 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import inst from "./inst.js";
 import styles from "./styles.module.css";
 import axios from 'axios';
-import Button from 'react-bootstrap/Button'
-import Collapse from 'react-bootstrap/Collapse'
 import { useMediaQuery } from "react-responsive";
-
-function convertDate(toBeConverted) {
-    let gmtDate = typeof toBeConverted == "string" ? new Date(toBeConverted) : toBeConverted instanceof Date ? toBeConverted : null;
-
-    let bucharestOptions = { timeZone: 'Europe/Bucharest', hour12: false };
-    let year = gmtDate.toLocaleString('en-GB', { ...bucharestOptions, year: 'numeric' });
-    let month = gmtDate.toLocaleString('en-GB', { ...bucharestOptions, month: '2-digit' });
-    let day = gmtDate.toLocaleString('en-GB', { ...bucharestOptions, day: '2-digit' });
-    let hour = gmtDate.toLocaleString('en-GB', { ...bucharestOptions, hour: '2-digit', hour12: false });
-    let minute = gmtDate.toLocaleString('en-GB', { ...bucharestOptions, minute: '2-digit' });
-    let second = gmtDate.toLocaleString('en-GB', { ...bucharestOptions, second: '2-digit' });
-
-    return `${year}-${month}-${day}T${('0' + hour).slice(-2)}:${('0' + minute).slice(-2)}:${('0' + second).slice(-2)}.000Z`;
-}
 
 const Add = ({ uid }) => {
     const [query, setQuery] = useState({
@@ -33,7 +17,6 @@ const Add = ({ uid }) => {
 
     const [dosare, setDosare] = useState([])
     const [error, setError] = useState("");
-    const [open, setOpen] = useState([]); 
     const isMobile = useMediaQuery({ query: `(max-width: 1115px)`})
     const [loadingResults, setLoadingResults] = useState(false); 
     const [pushed, setPushed] = useState({state: true, index: -1});
@@ -54,7 +37,7 @@ const Add = ({ uid }) => {
         e.preventDefault();
         setLoadingResults(true);
 
-        if (query.numarDosar == "" && query.numeParte == "" && query.institutie == "") {
+        if (query.numarDosar === "" && query.numeParte === "" && query.institutie === "") {
             alert("Completati cel putin o casuta!");
             setLoadingResults(false);
             return;
@@ -84,7 +67,7 @@ const Add = ({ uid }) => {
                 error.response.status <= 500
             ) {
                 console.log(error)
-                if (error.response.data.message == "noResult") setError("No results found!")
+                if (error.response.data.message === "noResult") setError("No results found!")
                 else setError(error.response.data.message)
             }
         }
@@ -212,7 +195,7 @@ const Add = ({ uid }) => {
                                             <div className="mt-4">
                                                 <div className="d-flex justify-center align-items-center">
                                                     <div>
-                                                        <button className="btn btn-primary my-2 mr-2" onClick={e => handlePush(e, dosar, index)}>{!pushed.state && index == pushed.index ? "Se adauga..." : "Adaugare in lista de dosare"}</button>
+                                                        <button className="btn btn-primary my-2 mr-2" onClick={e => handlePush(e, dosar, index)}>{!pushed.state && index === pushed.index ? "Se adauga..." : "Adaugare in lista de dosare"}</button>
                                                     </div>
                                                 </div>
                                             </div>
