@@ -1,6 +1,5 @@
 import { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
 import { BarLoader } from "react-spinners";
 
@@ -8,7 +7,6 @@ const Login = ({ change }) => {
 	const [data, setData] = useState({ email: "", password: "" });
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState(false);
-	const [color, setColor] = useState("#ffffff");
 
 	const handleChange = ({ currentTarget: input }) => {
 		setData({ ...data, [input.name]: input.value });
@@ -62,7 +60,7 @@ const Login = ({ change }) => {
 					{error && <div className={styles.error_msg}>{error}</div>}
 					<button type="submit" className={styles.green_btn} disabled={loading}>
 						{loading ? (
-							<BarLoader color={color} loading={loading} size={30} />
+							<BarLoader color={"#ffffff"} loading={loading} size={30} />
 						) : (
 							"Conectează-te"
 						)}

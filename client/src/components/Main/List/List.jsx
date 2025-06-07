@@ -48,7 +48,7 @@ const List = ({ userid, f }) => {
         arr.forEach((sedinta) => {
             if (typeof sedinta.dosare != "undefined") {
                 sedinta.dosare.SedintaDosar.forEach(element => {
-                    if (element.numar == numar) {
+                    if (element.numar === numar) {
                         var toBeReturned = sedinta.dosare.SedintaDosar
                         toBeReturned.sort((a, b) => a.ora.localeCompare(b.ora));
                         setPropsToPass(toBeReturned);
@@ -91,6 +91,7 @@ const List = ({ userid, f }) => {
                 console.log(error.response.data.message)
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [deleted])
 
     async function handleDelete(dosar) {
@@ -179,7 +180,7 @@ const List = ({ userid, f }) => {
 
                     if (typeof value === 'string') value = value.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
             
-                    if (searchKeys.includes(key) && typeof value === 'string' && value.toLowerCase().includes(key == "institutie" ? query.replace(/\s+/g, '').toLowerCase() : query.toLowerCase())) {
+                    if (searchKeys.includes(key) && typeof value === 'string' && value.toLowerCase().includes(key === "institutie" ? query.replace(/\s+/g, '').toLowerCase() : query.toLowerCase())) {
                         const parentId = JSON.stringify(parent);
                         if (!seenParents.has(parentId)) {
                             seenParents.add(parentId);  
@@ -194,7 +195,7 @@ const List = ({ userid, f }) => {
 
                             if (typeof item === 'object' && item !== null) {
                                 searchInObject(item, parent);
-                            } else if (typeof item === 'string' && item.toLowerCase().includes(key == "institutie" ? query.replace(/\s+/g, '').toLowerCase() : query.toLowerCase())) {
+                            } else if (typeof item === 'string' && item.toLowerCase().includes(key === "institutie" ? query.replace(/\s+/g, '').toLowerCase() : query.toLowerCase())) {
                                 const parentId = JSON.stringify(parent);  
                                 if (!seenParents.has(parentId)) {
                                     seenParents.add(parentId);  
@@ -223,7 +224,7 @@ const List = ({ userid, f }) => {
             <div className='flex flex-column items-center justify-between'>
                 <h1>Lista Dosare</h1>
                 <input type="text" className="form-control my-2" placeholder="Search..." aria-label="Search" onChange={e => handleSearch(e.target.value)} />
-                {startedSearching ? <p>{searchResult.length == 1 ? "S-a gasit 1 rezultat" : "S-au gasit " + searchResult.length + " rezultate"}</p> : <></>}
+                {startedSearching ? <p>{searchResult.length === 1 ? "S-a gasit 1 rezultat" : "S-au gasit " + searchResult.length + " rezultate"}</p> : <></>}
             </div>
             
             {searchResult.length > 0 ? 
@@ -346,7 +347,7 @@ const List = ({ userid, f }) => {
                                                 <div className="d-flex justify-content-between align-items-center">
                                                     <div>
                                                         <button className="btn btn-danger my-2 mr-2" onClick={e => handleDelete(dosar)}>Sterge</button>
-                                                        <button className="btn btn-success my-2 mr-2" onClick={e => handleRefresh(dosar, index)}>{!refreshed.state && index == refreshed.index ? "Refreshing..." : "Refresh"}</button>
+                                                        <button className="btn btn-success my-2 mr-2" onClick={e => handleRefresh(dosar, index)}>{!refreshed.state && index === refreshed.index ? "Refreshing..." : "Refresh"}</button>
                                                     </div>
                                                     <div>
                                                         <p className="fst-italic mb-0">

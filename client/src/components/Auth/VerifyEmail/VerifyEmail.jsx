@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
 import styles from "./styles.module.css";
 import { useState } from 'react';
@@ -8,9 +8,8 @@ const VerifyEmail = ({ verificationInfo }) => {
     const inputsRef = useRef([]);
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
-    const [color, setColor] = useState("#ffffff");
 
-    const sendVerificationCode = async () => {
+    const sendVerificationCode = useCallback(async () => {
         try {
             await axios.post('/api/verifyEmail', {
                 email: verificationInfo[1],
@@ -21,11 +20,11 @@ const VerifyEmail = ({ verificationInfo }) => {
                 error.response?.data?.message || "A apărut o eroare la trimiterea codului. Încearcă din nou."
             );
         }
-    };
-
+    }, [verificationInfo]);
+    
     useEffect(() => {
         sendVerificationCode();
-    }, [verificationInfo]);
+    }, [sendVerificationCode]);
 
     async function handleSuccess() {
         const { data } = await axios.post("/api/fetchUIDFromTempCookie");
@@ -138,7 +137,7 @@ const VerifyEmail = ({ verificationInfo }) => {
                 {error && <div className={styles.error_msg}>{error}</div>}
                 <button className="px-6 py-2 bg-gray-900 text-white rounded hover:bg-gray-600 transition min-h-11 min-w-12" onClick={compareCodes} disabled={loading}>
                     {loading ? (
-                        <BarLoader color={color} loading={loading} width={100} />
+                        <BarLoader color={"#ffffff"} loading={loading} width={100} />
                     ) : (
                         "Către Plată"
                     )}

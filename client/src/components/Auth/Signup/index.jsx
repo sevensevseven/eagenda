@@ -1,16 +1,12 @@
 import styles from "./styles.module.css";
-import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import {useState} from "react";
-import {useEffect} from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import {useRef} from "react";
 import { BarLoader } from "react-spinners";
 
 const Signup = ({ change, triggerVerifyPage, setVerificationInfo}) => {
     const recaptcha = useRef();
-
-    const [color, setColor] = useState("#ffffff");
 
     const [data, setData] = useState ({
         first: "",
@@ -42,8 +38,6 @@ const Signup = ({ change, triggerVerifyPage, setVerificationInfo}) => {
     const [recurrence, setRecurrence] = useState("yearly");
 
     const [submitting, setSubmitting] = useState(false);
-
-    const navigate = useNavigate();
 
     const handleChange = ({currentTarget: input}) => {
         setData({...data, [input.name]: input.value});
@@ -215,7 +209,7 @@ const Signup = ({ change, triggerVerifyPage, setVerificationInfo}) => {
                     {error && <div className={styles.error_msg}>{error}</div>}
                     <ReCAPTCHA size="invisible" ref={recaptcha} sitekey={process.env.REACT_APP_SITE_KEY} />
                     <button type="submit" className={styles.green_btn} disabled={submitting}>
-                        {submitting ? <BarLoader color={color} width={100} height={3} /> : "Pasul următor"}
+                        {submitting ? <BarLoader color={"#ffffff"} width={100} height={3} /> : "Pasul următor"}
                     </button>
                     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", marginTop: "10px" }} className={styles.change}>
                         <p style={{ marginBottom: 0 }}>Deja membru?</p>
