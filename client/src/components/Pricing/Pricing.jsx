@@ -150,6 +150,7 @@ const Pricing = ({ uid }) => {
                                     ))}
                                 </ul>
                                 <div className="space-y-2">
+                                    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                                     <a
                                         className="btn btn-primary btn-block "
                                         target="_blank"

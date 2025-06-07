@@ -335,7 +335,7 @@ const List = ({ userid, f }) => {
                                                             className="btn btn-link"
                                                             onClick={() => toggleExpand(index, "title2")}
                                                         >
-                                                            {expanded[index].title2 ? "Ascunde Lista Sedinte" : "Vezi Lista Sedinte"}
+                                                            {expanded[index].title2 ? "Ascunde Istoric Dosar" : "Vezi Istoric Dosar"}
                                                         </button>
                                                     </div>
                                                 </div>

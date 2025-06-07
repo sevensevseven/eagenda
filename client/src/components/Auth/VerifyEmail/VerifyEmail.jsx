@@ -81,13 +81,10 @@ const VerifyEmail = ({ verificationInfo }) => {
     }
 
     function back() {
-        axios.post('/api/deleteAccount', {
-            email: verificationInfo[1],
-        }).then(() => {
-            console.log("Account deleted");
+        axios.post('/api/deleteAccount').then(() => {
             window.location.href = "/auth";
         }).catch((err) => {
-            console.error("Error deleting account:", err);
+            console.error(err);
         });
     }
 
