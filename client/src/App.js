@@ -6,6 +6,7 @@ import Canceled from "./components/Canceled/Canceled";
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Auth from "./components/Auth/Auth";
+import Install from "./components/Install";
 
 function App() {
 	const [shouldDisplay, setShouldDisplay] = useState(false);
@@ -31,6 +32,7 @@ function App() {
 				<Route path="/auth" exact element={<Navigate replace to="/" />} />
 				<Route path="/canceled" exact element={<Canceled />} />
 				<Route path="/success" exact element={<Success />} />
+				<Route path="/install" exact element={<Install />} />
 			</Routes>
 		);
 		else return (
