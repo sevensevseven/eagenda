@@ -4,7 +4,6 @@ const Install = () => {
     useEffect(() => {
         const handler = (e) => {
             e.preventDefault();
-            setDeferredPrompt(e);
 
             // Show the install prompt immediately
             e.prompt();
