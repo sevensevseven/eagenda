@@ -38,6 +38,7 @@ function App() {
 		else return (
 			<Routes>
 				<Route path="/auth" exact element={<Auth />} />
+				<Route path="/install" exact element={<Install />} />
               	<Route path="*"       element={<Navigate replace to="/auth" />} />
 			</Routes>
 		)
