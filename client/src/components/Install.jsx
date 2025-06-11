@@ -3,6 +3,7 @@ import { useEffect } from "react";
 const Install = () => {
     useEffect(() => {
         const handler = (e) => {
+            console.log("beforeinstallprompt event fired");
             e.preventDefault();
 
             // Show the install prompt immediately
