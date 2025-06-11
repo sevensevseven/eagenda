@@ -30,11 +30,11 @@ const Install = () => {
     };
 
     return (
-        <>
+        <div className="flex flex-col items-center justify-center h-screen">
             {deferredPrompt && (
-                <button onClick={handleInstallClick}>Install App</button>
+                <button className="btn btn-primary" onClick={handleInstallClick}>Install App</button>
             )}
-        </>
+        </div>
     );
 };
 
