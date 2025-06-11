@@ -14,7 +14,6 @@ const Install = () => {
                 } else {
                     console.log("User dismissed the A2HS prompt");
                 }
-                setDeferredPrompt(null);
                 window.location.href = "/";
             });
         };
