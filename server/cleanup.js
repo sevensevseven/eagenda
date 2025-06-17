@@ -21,10 +21,7 @@ async function cleanup() {
                     else resolve(result);
                 });
             });
-            console.log(`Cleanup complete. Deleted ${staleUserIds.length} unverified users.`);
-        } else {
-            console.log("Cleanup complete. No unverified users found.");
-        }
+        } 
     } catch (error) {
         console.error("Error during cleanup:", error);
     }

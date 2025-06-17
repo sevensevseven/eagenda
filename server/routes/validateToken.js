@@ -32,6 +32,7 @@ router.post('/', async (req, res) => {
                 path: '/',                // make it available on all routes
                 maxAge: 3 * 24 * 60 * 60 * 1000
             });
+            
             return res.status(401).json({ valid: false, error: 'User not found.' });
         }
 

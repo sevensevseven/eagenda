@@ -106,7 +106,7 @@ function findUser(id) {
 async function handleChange(userid, newDosar, sendArr) {
     
     const user = await findUser(userid)
-    if (user[0].emailmodificari) {
+    if (user[0]?.emailmodificari) {
         let obj = sendArr.find(o => o.userid == userid);
         if (typeof obj == "undefined") sendArr.push({
             userid: userid,
@@ -124,7 +124,7 @@ async function handleChange(userid, newDosar, sendArr) {
 
 async function handleFoundSedinta(userid, numardosar, institutie, sedinta, sendArr) { 
     const user = await findUser(userid)
-    if (user[0].emailsedinte) {
+    if (user[0]?.emailsedinte) {
         let obj = sendArr.find(o => o.userid == userid);
         if (typeof obj == "undefined") sendArr.push({
             userid: userid,

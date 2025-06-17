@@ -62,8 +62,8 @@ stripeWebhookRoute.post(
     async (request, response) => {
         function handleSuccess(customer_id, email) {
             return new Promise((resolve, reject) => {
-                const sql = "UPDATE `users` SET `customer_id`=?, `emailmodificari`=?, `emailsedinte`=? WHERE `email`=?";
-                db.query(sql, [customer_id, 1, 1, email], (err, result) => {
+                const sql = "UPDATE `users` SET `customer_id`=?, `emailmodificari`=?, `emailsedinte`=?, `trial_received`=? WHERE `email`=?";
+                db.query(sql, [customer_id, 1, 1, 1, email], (err, result) => {
                     if (err) reject(err);
                     resolve(result)
                 });
@@ -101,7 +101,7 @@ stripeWebhookRoute.post(
         }
 
         let event = request.body;
-        const endpointSecret = process.env.WEBHOOK_SECRET;
+        const endpointSecret = process.env.PRODUCTION === 'true' ? process.env.WEBHOOK_SECRET : process.env.T_WEBHOOK_SECRET;
         if (endpointSecret) {
             const signature = request.headers['stripe-signature'];
             try {
@@ -129,11 +129,18 @@ stripeWebhookRoute.post(
                 console.log(`Deleted - Subscription status is ${status}.`);
 
                 await new Promise((resolve, reject) => {
-                    db.query("DELETE FROM users WHERE customer_id = ?", [subscription.customer], (err, result) => {
+                    db.query("UPDATE `users` SET `customer_id`=?, `emailmodificari`=?, `emailsedinte`=? WHERE `customer_id`=?", [null, 0, 0, subscription.customer], (err, result) => {
                         if (err) reject(err);
                         resolve(result);
                     });
                 });
+
+                // await new Promise((resolve, reject) => {
+                //     db.query("DELETE FROM users WHERE customer_id = ?", [subscription.customer], (err, result) => {
+                //         if (err) reject(err);
+                //         resolve(result);
+                //     });
+                // });
                 
                 //TODO: De implementat stergerea dupa o perioada de timp
                 // const customer = await stripe.customers.retrieve(subscription.customer);
@@ -146,6 +153,12 @@ stripeWebhookRoute.post(
                 subscription = event.data.object;
                 status = subscription.status;
                 console.log(`Created - Subscription status is ${status}.`);
+
+                if (status == "trialing") {
+                    const customer = await stripe.customers.retrieve(subscription.customer);
+
+                    await handleSuccess(subscription.customer, customer.email);
+                }
 
                 break;
             case 'customer.subscription.updated':
@@ -219,9 +232,11 @@ app.use(rateLimitMiddleware);
 app.use(authenticateJWT); 
 
 const [month, half, year] =
-[process.env.PRICE_MONTH, process.env.PRICE_HALF, process.env.PRICE_YEAR];
+process.env.PRODUCTION === 'true' ?
+    [process.env.PRICE_MONTH, process.env.PRICE_HALF, process.env.PRICE_YEAR] :
+    [process.env.T_PRICE_MONTH, process.env.T_PRICE_HALF, process.env.T_PRICE_YEAR];
 
-const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY)
+const stripe = require("stripe")(process.env.PRODUCTION === 'true' ? process.env.STRIPE_PRIVATE_KEY : process.env.T_STRIPE_PRIVATE_KEY);
 
 function findUserById(id) {
     return new Promise((resolve, reject) => {
@@ -236,6 +251,7 @@ function findUserById(id) {
 const stripeSession = async(plan, uid) => {
     try {
         const user = await findUserById(uid);
+        const alreadyReceivedTrial = user[0].trial_received;
         const session = await stripe.checkout.sessions.create({
             mode: "subscription",
             payment_method_types: ["card"],
@@ -245,6 +261,19 @@ const stripeSession = async(plan, uid) => {
                     quantity: 1
                 },
             ],
+            ...(
+                !alreadyReceivedTrial ? {
+                    subscription_data: {
+                        trial_period_days: 14,
+                        trial_settings: {
+                            end_behavior: {
+                                missing_payment_method: 'cancel',
+                            },
+                        },
+                    },
+                } : {}
+            ),
+            ...(!alreadyReceivedTrial && { payment_method_collection: 'if_required' }),
             tax_id_collection: {
                 enabled: true,
             },
@@ -334,11 +363,11 @@ app.use("/api/captcha", captchaRoutes);
 app.use("/api/verifyEmail", verifyEmailRoutes);
 app.use("/api/compareCodes", compareCodesRoutes);
 app.use("/api/deleteAccount", deleteAccountRoutes);
-app.use("/api/deleteAccountId", deleteAccountIdRoutes);
+// app.use("/api/deleteAccountId", deleteAccountIdRoutes);
 app.use("/api/fetchUIDFromTempCookie", fetchUIDFromTempCookieRoutes);
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
 cron.schedule("*/15 * * * *", () => torun())
-cron.schedule("*/30 * * * *", () => cleanup());
+cron.schedule("*/30 * * * * *", () => cleanup());

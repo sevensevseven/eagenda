@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY); 
+const stripe = require('stripe')(process.env.PRODUCTION === 'true' ? process.env.STRIPE_PRIVATE_KEY : process.env.T_STRIPE_PRIVATE_KEY); 
 
 function findUserById(id) {
     return new Promise((resolve, reject) => {
