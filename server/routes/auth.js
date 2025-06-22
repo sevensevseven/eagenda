@@ -61,7 +61,8 @@ router.post("/", async (req, res) => {
         const actualCost = parseInt(user[0].password.split('$')[2]);
         if (actualCost < process.env.SALT) {
             console.log(`Updating password for user ${user[0].email} to match new bcrypt cost`);
-            const newHash = bcrypt.hash(password, process.env.SALT);
+            const salt = await bcrypt.genSalt(Number(process.env.SALT));
+            const newHash = await bcrypt.hash(req.body.password, salt);
             await saveNewlyHashedPassword(newHash, user[0].id); // update DB
         }
 
