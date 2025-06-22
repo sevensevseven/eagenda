@@ -10,11 +10,29 @@ const Auth = () => {
     const [verifyPage, setVerifyPage] = useState(false);
     const [verificationInfo, setVerificationInfo] = useState([]);
     return (
-        <>
+        
+        <div className={styles.noScroll}>
             <div className={styles.background}>
-                <div>
-                    <div className={styles.content}></div>
-                </div>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
             <div className={styles.container}>
                 {verifyPage ? (
@@ -23,7 +41,7 @@ const Auth = () => {
                     login ? <Login change={setLogin}/> : <Signup change={setLogin} triggerVerifyPage={setVerifyPage} setVerificationInfo={setVerificationInfo}/>
                 )}
             </div>
-        </>
+        </div>
     )
 };
 

@@ -205,6 +205,12 @@ const Signup = ({ change, triggerVerifyPage, setVerificationInfo}) => {
                                 Anual
                             </label>
                         </div>
+                        <div className="flex flex-row w-full items-center justify-center mt-1 py-1 rounded bg-green-100 text-green-700 text-xs font-medium">
+                            <div className="rounded bg-green-700 text-white text-xs font-semibold px-1 py-0.5">
+                                NOU!
+                            </div>
+                            <p className="mb-0 ml-2">Încearcă 2 săptămâni gratuit!</p>
+                        </div>
                     </div>
                     {error && <div className={styles.error_msg}>{error}</div>}
                     <ReCAPTCHA size="invisible" ref={recaptcha} sitekey={process.env.REACT_APP_SITE_KEY} />
