@@ -14,6 +14,18 @@ function findUser(email) {
     })
 }
 
+function saveNewlyHashedPassword(newPassword, id) {
+    return new Promise((resolve, reject) => {
+        const sql =
+            "UPDATE `users` SET `password`=? WHERE `id`=?";
+        const values = [newPassword, id];
+        db.query(sql, values, (err, result) => {
+            if (err) reject(err)
+            resolve(result)
+        });
+    })
+}
+
 function generateAuthToken(toBeEncrypted) {
     const token = jwt.sign({id: toBeEncrypted}, process.env.JWTPRIVATEKEY, {expiresIn: "3d"});
     return token;
@@ -45,6 +57,13 @@ router.post("/", async (req, res) => {
             path: '/',                // make it available on all routes
             maxAge: 3 * 24 * 60 * 60 * 1000
         });
+
+        const actualCost = parseInt(user[0].password.split('$')[2]);
+        if (actualCost < process.env.SALT) {
+            console.log(`Updating password for user ${user[0].email} to match new bcrypt cost`);
+            const newHash = bcrypt.hash(password, process.env.SALT);
+            await saveNewlyHashedPassword(newHash, user[0].id); // update DB
+        }
 
         return res.json({ success: true });
     } catch (error) {
