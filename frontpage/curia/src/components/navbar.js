@@ -38,7 +38,6 @@ export default function Navbar() {
           </button>
         </div>
       </div>
-      <div className={`w-full ${scrolled ? `h-px ${inverted ? "bg-black" : "bg-white"} bg-opacity-10 backdrop-filter backdrop-blur-md` : ""}`}></div>
     </nav>
   )
 }
