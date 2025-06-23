@@ -7,20 +7,20 @@ import styles from "./styles.module.css";
 export const plans = [
     {
         link: process.env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_8wM2aR5sQ1Ht9205ko' : '',
-        priceId: process.env.NODE_ENV === 'development' ? 'price_1QvfQKIImGcHCAj8LwRejKne' : '',
+        priceId: process.env.NODE_ENV === 'development' ? 'price_1RdCwsIImGcHCAj8cc1JoZ6K' : '',
         price: 6.99,
         duration: '/ luna'
     },
     {
         link: process.env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_dR63eV2gEdqbba8bIN' : '',
-        priceId: process.env.NODE_ENV === 'development' ? 'price_1QvfR1IImGcHCAj8Axa8MAmM' : '',
+        priceId: process.env.NODE_ENV === 'development' ? 'price_1RdCxgIImGcHCAj8iWqDnLuS' : '',
         price: 39.99,
         duration: '/ 6 luni',
         discount: 6,
     },
     {
         link: process.env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_cN2cPv5sQ5XJfqo9AG' : '',
-        priceId: process.env.NODE_ENV === 'development' ? 'price_1QvfRZIImGcHCAj8BfnJgRko' : '',
+        priceId: process.env.NODE_ENV === 'development' ? 'price_1RdCyJIImGcHCAj8if6fIGS1' : '',
 
         price: 74.99,
         duration: '/ an',
