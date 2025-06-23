@@ -369,5 +369,5 @@ app.use("/api/fetchUIDFromTempCookie", fetchUIDFromTempCookieRoutes);
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
-cron.schedule("*/15 * * * *", () => torun())
+cron.schedule("*/30 * * * *", () => torun())
 cron.schedule("*/30 * * * * *", () => cleanup());
