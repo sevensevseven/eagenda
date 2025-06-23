@@ -8,13 +8,13 @@ export const plans = [
     {
         link: process.env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_8wM2aR5sQ1Ht9205ko' : '',
         priceId: process.env.NODE_ENV === 'development' ? 'price_1QvfQKIImGcHCAj8LwRejKne' : '',
-        price: 4.99,
+        price: 6.99,
         duration: '/ luna'
     },
     {
         link: process.env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_dR63eV2gEdqbba8bIN' : '',
         priceId: process.env.NODE_ENV === 'development' ? 'price_1QvfR1IImGcHCAj8Axa8MAmM' : '',
-        price: 27.99,
+        price: 39.99,
         duration: '/ 6 luni',
         discount: 6,
     },
@@ -22,7 +22,7 @@ export const plans = [
         link: process.env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_cN2cPv5sQ5XJfqo9AG' : '',
         priceId: process.env.NODE_ENV === 'development' ? 'price_1QvfRZIImGcHCAj8BfnJgRko' : '',
 
-        price: 49.99,
+        price: 74.99,
         duration: '/ an',
         discount: 16,
     }
@@ -75,7 +75,7 @@ const Pricing = ({ uid }) => {
                                             type="radio"
                                             name="monthly"
                                             className="radio"
-                                            checked={plan.price === 4.99}
+                                            checked={plan.price === 6.99}
                                         />
                                         <span>Plata Lunara</span>
                                     </div>
@@ -87,7 +87,7 @@ const Pricing = ({ uid }) => {
                                             type="radio"
                                             name="quarterly"
                                             className="radio"
-                                            checked={plan.price === 27.99}
+                                            checked={plan.price === 39.99}
                                         />
                                         <span>Plata Semestriala</span>
                                     </div>
@@ -99,7 +99,7 @@ const Pricing = ({ uid }) => {
                                             type="radio"
                                             name="yearly"
                                             className="radio"
-                                            checked={plan.price === 49.99}
+                                            checked={plan.price === 74.99}
                                         />
                                         <span>Plata Anuala</span>
                                     </div>

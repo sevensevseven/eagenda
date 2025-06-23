@@ -18,9 +18,9 @@ const Signup = ({ change, triggerVerifyPage, setVerificationInfo}) => {
     const [error, setError] = useState();
 
     const amounts = {
-        monthly: 4.99,
-        semestrial: 27.99,
-        yearly: 49.99
+        monthly: 6.99,
+        semestrial: 39.99,
+        yearly: 74.99
     }
 
     const prices = {
