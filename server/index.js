@@ -44,6 +44,7 @@ const cookieParser = require("cookie-parser");
 const allowed = [
     "https://curiachronos.ro",        // e.g. https://app.yourdomain.com
     "https://api.curiachronos.ro",
+    "https://app.curiachronos.ro",
     'http://localhost:3000'   // if you have another frontend for the Stripe portal
 ];
   
@@ -294,9 +295,9 @@ const stripeSession = async(plan, uid) => {
 app.post("/api/create-subscription-checkout-session", async(req, res) => {
     const {plan, customerId} = req.body;
     let planId = null;
-    if (plan == 4.99) planId = month;
-    else if (plan == 27.99) planId = half;
-    else if (plan == 49.99) planId = year;
+    if (plan == 6.99) planId = month;
+    else if (plan == 39.99) planId = half;
+    else if (plan == 74.99) planId = year;
 
     function insertSessionIdToUser(id, sessionId) {
         return new Promise((resolve, reject) => {
