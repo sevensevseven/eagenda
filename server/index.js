@@ -143,6 +143,7 @@ stripeWebhookRoute.post(
                 // });
                 
                 //TODO: De implementat stergerea dupa o perioada de timp
+                // if (subscription.trial_start === null) // if the subscription was not in trial
                 // const customer = await stripe.customers.retrieve(subscription.customer);
                 // const user = await findUserByEmail(customer.email);
 
