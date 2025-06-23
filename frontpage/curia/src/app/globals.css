@@ -11,6 +11,10 @@
 :root {
   --background: #ededed;
   --foreground: #0a0a0a;
+  --accent: #fcc46c;
+  --darker: #884A39;
+  --faq-bg:  #e6e5e5;
+  --answer-bg: #e4e3e2;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -1,7 +1,7 @@
 
 export default function Background() {
   return (
-    <div className="absolute inset-0 w-full h-[36rem] overflow-hidden -z-[9999] pointer-events-none">
+    <div id="home" className="absolute inset-0 w-full h-[30rem] overflow-hidden -z-[9999] pointer-events-none">
       <div
         className="absolute inset-0 overflow-hidden"
       >
