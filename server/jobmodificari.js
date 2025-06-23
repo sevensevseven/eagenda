@@ -186,19 +186,23 @@ async function toRun() {
         console.log("Updating " + dosare.length + " dosare")
         for (const chunk of chunks) {
             var updatePromises = chunk.map(async dosar => {
-                if (index > 0 && index % 300 == 0) await sleep(15 * 1000);
-    
-                const newDosar = await Portal.cautareDosare(dosar.numardosar, "", "", dosar.institutie);
-    
-                if (Number(new Date(dosar.dosardata.dataModificare.split("T")[0] + "T00:00:00.000Z")) != Number(new Date(newDosar[0].dataModificare.toISOString().split("T")[0] + "T00:00:00.000Z"))) {
-                    await handleChange(dosar.userid, newDosar[0], sendArr)
-                    changes++;
+                try {
+                    if (index > 0 && index % 300 == 0) await sleep(15 * 1000);
+                    
+                    const newDosar = await Portal.cautareDosare(dosar.numardosar, "", "", dosar.institutie);
+        
+                    if (Number(new Date(dosar.dosardata.dataModificare.split("T")[0] + "T00:00:00.000Z")) != Number(new Date(newDosar[0].dataModificare.toISOString().split("T")[0] + "T00:00:00.000Z"))) {
+                        await handleChange(dosar.userid, newDosar[0], sendArr)
+                        changes++;
+                    }
+        
+                    await updateDosar(newDosar[0], dosar)
+        
+                    index++;
+                    process.stdout.write(`\r\t- Updated ${index}/${dosare.length}, ${changes} changes found`);
+                } catch (error) {
+                    console.log(`\nError updating dosar ${dosar.numardosar} from ${dosar.institutie}:\n`, error);
                 }
-    
-                await updateDosar(newDosar[0], dosar)
-    
-                index++;
-                process.stdout.write(`\r\t- Updated ${index}/${dosare.length}, ${changes} changes found`);
             })
 
             try {
@@ -224,12 +228,16 @@ async function toRun() {
         const dosarePromises = dosare.map(async dosar => {
             if (typeof dosar.dosardata.sedinte != "undefined") {
                 const sedintePromises = dosar.dosardata.sedinte.DosarSedinta.map(async sedinta => {
-                    const dataSedinta = Number(new Date(convertDate(sedinta.data).split('T')[0] + "T" + sedinta.ora + ":00.000"));
-                    const dataAcum = Date.now();
-                    const lastCheck = Number(new Date(dosar.lastcheckedsedinte));
+                    try {
+                        const dataSedinta = Number(new Date(convertDate(sedinta.data).split('T')[0] + "T" + sedinta.ora + ":00.000"));
+                        const dataAcum = Date.now();
+                        const lastCheck = Number(new Date(dosar.lastcheckedsedinte));
 
-                    if (dataSedinta > dataAcum && millisecondsToDays(dataSedinta - dataAcum) <= 7 && millisecondsToDays(dataSedinta - lastCheck) >= 7) {
-                        await handleFoundSedinta(dosar.userid, dosar.numardosar, dosar.institutie, sedinta, sendArr);
+                        if (dataSedinta > dataAcum && millisecondsToDays(dataSedinta - dataAcum) <= 7 && millisecondsToDays(dataSedinta - lastCheck) >= 7) {
+                            await handleFoundSedinta(dosar.userid, dosar.numardosar, dosar.institutie, sedinta, sendArr);
+                        } 
+                    } catch (error) {
+                        console.log(`\nError in handleFoundSedinta - sedinta ${sedinta?.data} - ${sedinta?.ora} for dosar ${dosar.numardosar} from ${dosar.institutie}:\n`, error);
                     }
                 });
 
