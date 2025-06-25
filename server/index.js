@@ -279,8 +279,8 @@ const stripeSession = async(plan, uid) => {
             tax_id_collection: {
                 enabled: true,
             },
-            success_url: "https://curiachronos.ro/success",
-            cancel_url: `https://curiachronos.ro/canceled?value=${uid}`,
+            success_url: "https://app.curiachronos.ro/success",
+            cancel_url: `https://app.curiachronos.ro/canceled?value=${uid}`,
             metadata: {
                 userId: uid.toString()
             },
@@ -334,7 +334,7 @@ app.post("/api/create-subscription-checkout-session", async(req, res) => {
 
 app.post('/api/create-portal-session', async (req, res) => {
     try {
-        const returnUrl = "https://curiachronos.ro";
+        const returnUrl = "https://app.curiachronos.ro";
     
         const portalSession = await stripe.billingPortal.sessions.create({
             customer: req.body.customer_id,
