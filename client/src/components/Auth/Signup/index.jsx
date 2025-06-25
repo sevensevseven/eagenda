@@ -39,8 +39,9 @@ const Signup = ({ plan, change, triggerVerifyPage, setVerificationInfo}) => {
 
     useMemo(() => {
         if (plan) {
-            setRecurrence(plan == 1 ? "monthly" : plan == 2 ? "semestrial" : "yearly");
+            setRecurrence(plan === "1" ? "monthly" : plan === "2" ? "semestrial" : "yearly");
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const [submitting, setSubmitting] = useState(false);

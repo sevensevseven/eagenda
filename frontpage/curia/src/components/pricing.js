@@ -1,3 +1,5 @@
+"use client";
+
 export default function Pricing() {
   const plans = [
     { name: "Lunar", price: "6.99€", duration: "1 lună" },

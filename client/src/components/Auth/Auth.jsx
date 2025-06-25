@@ -16,6 +16,7 @@ const Auth = () => {
         if (page === "signup") {
             setLogin(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
