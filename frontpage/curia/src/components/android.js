@@ -31,7 +31,7 @@ export default function Android() {
           <img src="/android/buton.png" className="h-80 align-middle object-contain" alt="Buton Install in meniu" />
           <li>Confirmați alegerea.</li>
           <img src="/android/confirm.png" className="h-40 align-middle object-contain" alt="Confirmare instalare" />
-          <li>Aplicația va fi adăugată automat pe ecranul principal al dispozitivului dumneavoastră.</li>
+          <li>Aplicația va fi adăugată automat pe ecranul principal al dispozitivului dumneavoastră după <strong>10 secunde</strong>.</li>
         </ol>
       </section>
     </div>
