@@ -16,7 +16,7 @@ export const plans = [
         priceId: process.env.NODE_ENV === 'development' ? 'price_1RdCxgIImGcHCAj8iWqDnLuS' : '',
         price: 39.99,
         duration: '/ 6 luni',
-        discount: 6,
+        discount: 5,
     },
     {
         link: process.env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_cN2cPv5sQ5XJfqo9AG' : '',
@@ -24,7 +24,7 @@ export const plans = [
 
         price: 74.99,
         duration: '/ an',
-        discount: 16,
+        discount: 11,
     }
 ];
 
