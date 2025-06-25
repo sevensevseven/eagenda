@@ -1,3 +1,5 @@
+"use client";
+
 export default function Message() {
     return (
         <div className="flex flex-col lg:flex-row items-center justify-around gap-8 py-16">
@@ -22,7 +24,7 @@ export default function Message() {
                     ))}
                 </div>
                 <div>
-                    <button className="mt-6 px-6 py-3 min-w-36 bg-[--accent] text-[--darker] rounded-lg hover:bg-[--darker] hover:text-[--accent] transition-colors">Descopera</button>
+                    <button onClick={() => window.location.assign("https://app.curiachronos.ro/auth/signup")} className="mt-6 px-6 py-3 min-w-36 bg-[--accent] text-[--darker] rounded-lg hover:bg-[--darker] hover:text-[--accent] transition-colors">Descopera</button>
                 </div>
             </div>
             <div className="max-w-lg w-full">

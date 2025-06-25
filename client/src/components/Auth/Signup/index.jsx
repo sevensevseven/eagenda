@@ -1,11 +1,11 @@
 import styles from "./styles.module.css";
 import axios from "axios";
-import {useState} from "react";
+import {useState, useMemo} from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import {useRef} from "react";
 import { BarLoader } from "react-spinners";
 
-const Signup = ({ change, triggerVerifyPage, setVerificationInfo}) => {
+const Signup = ({ plan, change, triggerVerifyPage, setVerificationInfo}) => {
     const recaptcha = useRef();
 
     const [data, setData] = useState ({
@@ -36,6 +36,12 @@ const Signup = ({ change, triggerVerifyPage, setVerificationInfo}) => {
     };
 
     const [recurrence, setRecurrence] = useState("yearly");
+
+    useMemo(() => {
+        if (plan) {
+            setRecurrence(plan == 1 ? "monthly" : plan == 2 ? "semestrial" : "yearly");
+        }
+    }, []);
 
     const [submitting, setSubmitting] = useState(false);
 

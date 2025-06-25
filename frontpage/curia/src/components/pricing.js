@@ -34,12 +34,12 @@ export default function Pricing() {
         <div className="flex w-full sm:w-auto items-center justify-center">
           <div className="bg-white shadow-xl rounded-xl p-6 space-y-6 w-full sm:w-auto">
             <h3 className="text-xl font-bold text-center">Planuri disponibile</h3>
-            {plans.map((plan) => (
+            {plans.map((plan, index) => (
               <div key={plan.name} className="border border-gray-200 rounded-lg shadow-sm p-4 text-center sm:min-w-[360px]">
                 <h4 className="text-lg font-semibold mb-1">{plan.name}</h4>
                 <p className="text-3xl font-bold text-[--darker]">{plan.price}</p>
                 <p className="text-sm text-gray-500">{plan.duration}</p>
-                <button className="mt-4 px-4 py-2 bg-[--accent] text-[--darker] rounded hover:bg-[--darker] hover:text-[--accent] transition-colors">
+                <button onClick={() => window.location.assign(`https://app.curiachronos.ro/auth/signup/${index + 1}`)} className="mt-4 px-4 py-2 bg-[--accent] text-[--darker] rounded hover:bg-[--darker] hover:text-[--accent] transition-colors">
                   Începe acum
                 </button>
               </div>

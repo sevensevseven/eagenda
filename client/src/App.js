@@ -29,7 +29,7 @@ function App() {
 		if (shouldDisplay) return (
 			<Routes>
 				<Route path="/" exact element={<Main />} />
-				<Route path="/auth" exact element={<Navigate replace to="/" />} />
+				<Route path="/auth/*" exact element={<Navigate replace to="/" />} />
 				<Route path="/canceled" exact element={<Canceled />} />
 				<Route path="/success" exact element={<Success />} />
 				<Route path="/install" exact element={<Install />} />
@@ -37,7 +37,7 @@ function App() {
 		);
 		else return (
 			<Routes>
-				<Route path="/auth" exact element={<Auth />} />
+				<Route path="/auth/:page?/:plan?" exact element={<Auth />} />
 				<Route path="/install" exact element={<Install />} />
               	<Route path="*"       element={<Navigate replace to="/auth" />} />
 			</Routes>
