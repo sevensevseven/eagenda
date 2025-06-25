@@ -24,6 +24,19 @@
   }
 }
 
+@keyframes pulse-scale {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+.animate-pulse-scale {
+  animation: pulse-scale 2s ease-in-out infinite;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
