@@ -162,7 +162,7 @@ const Signup = ({ change, triggerVerifyPage, setVerificationInfo}) => {
                         <h3 className="mb-1 font-semibold">
                             {recurrence !== "monthly" && (
                                 <div className="text-xs text-red-500 line-through -mb-1">
-                                    ${(amounts.monthly * (recurrence === "semestrial" ? 3 : 12)).toFixed(2)}
+                                    ${(amounts.monthly * (recurrence === "semestrial" ? 6 : 12)).toFixed(2)}
                                 </div>
                             )}
                             €{prices[recurrence].amount.toFixed(2)}
