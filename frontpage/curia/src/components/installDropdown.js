@@ -28,7 +28,7 @@ export default function Dropdown({title}) {
             </div>
             <div
                 className={`transition-all duration-700 ease-in-out overflow-hidden px-6 rounded-b-xl ${
-                    isOpen ? 'max-h-[2000px] md:max-h-[1750px] lg:max-h-[1600px] opacity-100 mt-2 bg-white pb-6 pt-4' : 'max-h-0 opacity-0'
+                    isOpen ? 'max-h-[3000px] opacity-100 mt-2 bg-white pb-6 pt-4' : 'max-h-0 opacity-0'
                 }`}
             >
                 <div className="flex justify-start mb-6 pl-2 pr-2">

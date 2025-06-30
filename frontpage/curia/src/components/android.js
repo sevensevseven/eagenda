@@ -34,6 +34,17 @@ export default function Android() {
           <li>Aplicația va fi adăugată automat pe ecranul principal al dispozitivului dumneavoastră după <strong>10 secunde</strong>.</li>
         </ol>
       </section>
+
+      <section className="mt-4 pt-4 border-t border-gray-300">
+        <h3 className="text-lg font-medium">Aveți întrebări?</h3>
+        <p className="text-sm text-gray-700 mt-2">Dacă aveți nelămuriri sau întâmpinați dificultăți la instalare, nu ezitați să ne contactați la adresa <a href="mailto:contact@curiachronos.ro" className="inline underline text-blue-600 hover:text-blue-700">contact@curiachronos.ro</a> sau apăsând butonul de mai jos.</p>
+        <a
+          href="mailto:contact@curiachronos.ro"
+          className="inline-block mt-3 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition"
+        >
+          Contactați-ne
+        </a>
+      </section>
     </div>
   );
 }

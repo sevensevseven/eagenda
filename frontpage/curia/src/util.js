@@ -58,6 +58,16 @@ const faq = [
             <p>
               Totul este accesibil <strong>direct din orice browser</strong>, iar interfața este gândită să fie <em>intuitivă și eficientă</em>. Poate fi folosită cu ușurință de oricine, indiferent de experiența în utilizarea computerului.
             </p>
+            <section className="mt-4 pt-4 border-t border-gray-300">
+        <h3 className="text-lg font-medium">Aveți întrebări?</h3>
+        <p className="text-sm text-gray-700 mt-2">Dacă aveți nelămuriri sau întâmpinați dificultăți la instalare, nu ezitați să ne contactați la adresa <a href="mailto:contact@curiachronos.ro" className="inline underline text-blue-600 hover:text-blue-700">contact@curiachronos.ro</a> sau apăsând butonul de mai jos.</p>
+        <a
+          href="mailto:contact@curiachronos.ro"
+          className="inline-block mt-3 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition"
+        >
+          Contactați-ne
+        </a>
+      </section>
           </div>
         )
     },
@@ -77,6 +87,16 @@ const faq = [
                 <p>
                 Atunci când adăugați dosarele, pentru cele care au parcurs mai multe cicluri procesuale, aveți posibilitatea să vă alegeți adăugarea lor în lista de dosare, în funcție de interes <em>(la instanța în curs sau la toate instanțele pe rolul cărora s-au aflat)</em>, acestea fiind afișate separat.
                 </p>
+                <section className="mt-4 pt-4 border-t border-gray-300">
+        <h3 className="text-lg font-medium">Aveți întrebări?</h3>
+        <p className="text-sm text-gray-700 mt-2">Dacă aveți nelămuriri sau întâmpinați dificultăți la instalare, nu ezitați să ne contactați la adresa <a href="mailto:contact@curiachronos.ro" className="inline underline text-blue-600 hover:text-blue-700">contact@curiachronos.ro</a> sau apăsând butonul de mai jos.</p>
+        <a
+          href="mailto:contact@curiachronos.ro"
+          className="inline-block mt-3 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition"
+        >
+          Contactați-ne
+        </a>
+      </section>
             </div>
         </>)
     },
@@ -90,6 +110,16 @@ const faq = [
             <p>
               Pentru fiecare termen de judecată veți fi notificat cu cel puțin <strong>7 zile înainte</strong> că urmează să aveți înfățișarea în dosarul respectiv.
             </p>
+            <section className="mt-4 pt-4 border-t border-gray-300">
+        <h3 className="text-lg font-medium">Aveți întrebări?</h3>
+        <p className="text-sm text-gray-700 mt-2">Dacă aveți nelămuriri sau întâmpinați dificultăți la instalare, nu ezitați să ne contactați la adresa <a href="mailto:contact@curiachronos.ro" className="inline underline text-blue-600 hover:text-blue-700">contact@curiachronos.ro</a> sau apăsând butonul de mai jos.</p>
+        <a
+          href="mailto:contact@curiachronos.ro"
+          className="inline-block mt-3 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition"
+        >
+          Contactați-ne
+        </a>
+      </section>
           </div>
         </>)
     },
@@ -110,6 +140,16 @@ const faq = [
                 — lista completă a ședinței, unde vă puteți regăsi <strong>poziția</strong> dosarului, <br />
                 — câmpul dedicat <em>notițelor personale</em> pentru a vă pregăti eficient.
                 </p>
+                <section className="mt-4 pt-4 border-t border-gray-300">
+        <h3 className="text-lg font-medium">Aveți întrebări?</h3>
+        <p className="text-sm text-gray-700 mt-2">Dacă aveți nelămuriri sau întâmpinați dificultăți la instalare, nu ezitați să ne contactați la adresa <a href="mailto:contact@curiachronos.ro" className="inline underline text-blue-600 hover:text-blue-700">contact@curiachronos.ro</a> sau apăsând butonul de mai jos.</p>
+        <a
+          href="mailto:contact@curiachronos.ro"
+          className="inline-block mt-3 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition"
+        >
+          Contactați-ne
+        </a>
+      </section>
             </div>
         )
     },
@@ -126,6 +166,16 @@ const faq = [
             <p>
               Toate detaliile dosarului (<em>părți, istoric de termene, instanța, etc.</em>)
             </p>
+            <section className="mt-4 pt-4 border-t border-gray-300">
+        <h3 className="text-lg font-medium">Aveți întrebări?</h3>
+        <p className="text-sm text-gray-700 mt-2">Dacă aveți nelămuriri sau întâmpinați dificultăți la instalare, nu ezitați să ne contactați la adresa <a href="mailto:contact@curiachronos.ro" className="inline underline text-blue-600 hover:text-blue-700">contact@curiachronos.ro</a> sau apăsând butonul de mai jos.</p>
+        <a
+          href="mailto:contact@curiachronos.ro"
+          className="inline-block mt-3 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition"
+        >
+          Contactați-ne
+        </a>
+      </section>
           </div>
         )
     },
@@ -139,6 +189,16 @@ const faq = [
             <p>
               Puteți șterge dosarul din pagina <strong className="uppercase">LISTA DE DOSARE</strong>, cu ajutorul butonului <strong>"Șterge"</strong> <img src="/faq/del.png" className="inline h-8 align-middle" alt="Buton delete" />.
             </p>
+            <section className="mt-4 pt-4 border-t border-gray-300">
+        <h3 className="text-lg font-medium">Aveți întrebări?</h3>
+        <p className="text-sm text-gray-700 mt-2">Dacă aveți nelămuriri sau întâmpinați dificultăți la instalare, nu ezitați să ne contactați la adresa <a href="mailto:contact@curiachronos.ro" className="inline underline text-blue-600 hover:text-blue-700">contact@curiachronos.ro</a> sau apăsând butonul de mai jos.</p>
+        <a
+          href="mailto:contact@curiachronos.ro"
+          className="inline-block mt-3 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition"
+        >
+          Contactați-ne
+        </a>
+      </section>
           </div>
         )
     },
@@ -152,6 +212,16 @@ const faq = [
             <p>
               În funcție de perioada aleasă, veți primi o notificare de la partenerul nostru de plăți, <strong>Stripe</strong>, în legătură cu reînnoirea automată a abonamentului.
             </p>
+            <section className="mt-4 pt-4 border-t border-gray-300">
+        <h3 className="text-lg font-medium">Aveți întrebări?</h3>
+        <p className="text-sm text-gray-700 mt-2">Dacă aveți nelămuriri sau întâmpinați dificultăți la instalare, nu ezitați să ne contactați la adresa <a href="mailto:contact@curiachronos.ro" className="inline underline text-blue-600 hover:text-blue-700">contact@curiachronos.ro</a> sau apăsând butonul de mai jos.</p>
+        <a
+          href="mailto:contact@curiachronos.ro"
+          className="inline-block mt-3 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition"
+        >
+          Contactați-ne
+        </a>
+      </section>
           </div>
         )
     },
@@ -174,6 +244,16 @@ const faq = [
             <p>
               Totul se realizează <em>rapid și intuitiv</em>, fără pași complicați.
             </p>
+            <section className="mt-4 pt-4 border-t border-gray-300">
+        <h3 className="text-lg font-medium">Aveți întrebări?</h3>
+        <p className="text-sm text-gray-700 mt-2">Dacă aveți nelămuriri sau întâmpinați dificultăți la instalare, nu ezitați să ne contactați la adresa <a href="mailto:contact@curiachronos.ro" className="inline underline text-blue-600 hover:text-blue-700">contact@curiachronos.ro</a> sau apăsând butonul de mai jos.</p>
+        <a
+          href="mailto:contact@curiachronos.ro"
+          className="inline-block mt-3 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition"
+        >
+          Contactați-ne
+        </a>
+      </section>
           </div>
         )
     },
@@ -187,6 +267,16 @@ const faq = [
             <p className="text-red-600 font-semibold">
               ATENȚIE! Dacă anulați abonamentul din orice motive, o nouă abonare presupune reintroducerea tuturor dosarelor.
             </p>
+            <section className="mt-4 pt-4 border-t border-gray-300">
+        <h3 className="text-lg font-medium">Aveți întrebări?</h3>
+        <p className="text-sm text-gray-700 mt-2">Dacă aveți nelămuriri sau întâmpinați dificultăți la instalare, nu ezitați să ne contactați la adresa <a href="mailto:contact@curiachronos.ro" className="inline underline text-blue-600 hover:text-blue-700">contact@curiachronos.ro</a> sau apăsând butonul de mai jos.</p>
+        <a
+          href="mailto:contact@curiachronos.ro"
+          className="inline-block mt-3 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition"
+        >
+          Contactați-ne
+        </a>
+      </section>
           </div>
         )
     },
@@ -200,6 +290,16 @@ const faq = [
             <p className="text-red-600 font-semibold">
               ATENȚIE! Dacă în termen de 3 săptămâni o nouă metodă de plată care să fie valabilă nu este adăugată, abonamentul va fi anulat, iar lista dumneavoastră de dosare se va pierde.
             </p>
+            <section className="mt-4 pt-4 border-t border-gray-300">
+        <h3 className="text-lg font-medium">Aveți întrebări?</h3>
+        <p className="text-sm text-gray-700 mt-2">Dacă aveți nelămuriri sau întâmpinați dificultăți la instalare, nu ezitați să ne contactați la adresa <a href="mailto:contact@curiachronos.ro" className="inline underline text-blue-600 hover:text-blue-700">contact@curiachronos.ro</a> sau apăsând butonul de mai jos.</p>
+        <a
+          href="mailto:contact@curiachronos.ro"
+          className="inline-block mt-3 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition"
+        >
+          Contactați-ne
+        </a>
+      </section>
           </div>
         )
     },
@@ -210,6 +310,16 @@ const faq = [
             <p>
               Aveți o perioadă de probă de <strong>10 zile</strong>, în care puteți utiliza gratuit <em>toate funcționalitățile</em>. La sfârșitul acestei perioade, va fi necesară opțiunea de abonare pentru una dintre perioadele de plată.
             </p>
+            <section className="mt-4 pt-4 border-t border-gray-300">
+        <h3 className="text-lg font-medium">Aveți întrebări?</h3>
+        <p className="text-sm text-gray-700 mt-2">Dacă aveți nelămuriri sau întâmpinați dificultăți la instalare, nu ezitați să ne contactați la adresa <a href="mailto:contact@curiachronos.ro" className="inline underline text-blue-600 hover:text-blue-700">contact@curiachronos.ro</a> sau apăsând butonul de mai jos.</p>
+        <a
+          href="mailto:contact@curiachronos.ro"
+          className="inline-block mt-3 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition"
+        >
+          Contactați-ne
+        </a>
+      </section>
           </div>
         )
     },
@@ -232,6 +342,16 @@ const faq = [
             <p>
               Nu este nevoie de cunoștințe tehnice pentru a vă proteja contul; totul este gândit să funcționeze <em>în mod implicit</em> și să ofere <strong>liniște și siguranță</strong> în utilizare.
             </p>
+            <section className="mt-4 pt-4 border-t border-gray-300">
+        <h3 className="text-lg font-medium">Aveți întrebări?</h3>
+        <p className="text-sm text-gray-700 mt-2">Dacă aveți nelămuriri sau întâmpinați dificultăți la instalare, nu ezitați să ne contactați la adresa <a href="mailto:contact@curiachronos.ro" className="inline underline text-blue-600 hover:text-blue-700">contact@curiachronos.ro</a> sau apăsând butonul de mai jos.</p>
+        <a
+          href="mailto:contact@curiachronos.ro"
+          className="inline-block mt-3 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition"
+        >
+          Contactați-ne
+        </a>
+      </section>
           </div>
         )
     }

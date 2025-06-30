@@ -19,7 +19,7 @@ export default function Footer() {
         <div>
           <h3 className="font-semibold mb-2">Contact</h3>
           <ul className="text-sm space-y-1">
-            <li>Email: <a href="mailto:support@curiachronos.ro" className=" underline">contact@curiachronos.ro</a></li>
+            <li>Email: <a href="mailto:contact@curiachronos.ro" className=" underline">contact@curiachronos.ro</a></li>
           </ul>
         </div>
 
