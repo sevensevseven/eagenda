@@ -169,7 +169,7 @@ const Signup = ({ plan, change, triggerVerifyPage, setVerificationInfo}) => {
                         <h3 className="mb-1 font-semibold">
                             {recurrence !== "monthly" && (
                                 <div className="text-xs text-red-500 line-through -mb-1">
-                                    ${(amounts.monthly * (recurrence === "semestrial" ? 6 : 12)).toFixed(2)}
+                                    €{(amounts.monthly * (recurrence === "semestrial" ? 6 : 12)).toFixed(2)}
                                 </div>
                             )}
                             €{prices[recurrence].amount.toFixed(2)}
@@ -216,7 +216,7 @@ const Signup = ({ plan, change, triggerVerifyPage, setVerificationInfo}) => {
                             <div className="rounded bg-green-700 text-white text-xs font-semibold px-1 py-0.5">
                                 NOU!
                             </div>
-                            <p className="mb-0 ml-2">Încearcă 2 săptămâni gratuit!</p>
+                            <p className="mb-0 ml-2">Încearcă 10 zile gratuit!</p>
                         </div>
                     </div>
                     {error && <div className={styles.error_msg}>{error}</div>}
