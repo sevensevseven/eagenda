@@ -18,7 +18,7 @@ export default function Home() {
         <Hero />
         <div className="hidden lg:flex lg:flex-row items-center justify-center" id="features">
           <div className="w-[120rem] ml-16 overflow-visible">
-            <img src="/laptop.png" className="scale-150 object-contain pointer-events-none" />
+            <img src="/laptop.webp" className="scale-150 object-contain pointer-events-none" />
           </div>
           <Carousel />
         </div>

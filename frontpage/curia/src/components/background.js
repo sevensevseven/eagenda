@@ -5,7 +5,7 @@ export default function Background() {
         className="absolute inset-0 overflow-hidden"
       >
         <img
-          src="/backgrounds/background-2.png"
+          src="/backgrounds/background-2.webp"
           alt="Background"
           className="w-full h-full object-cover brightness-[0.8]"
         />
