@@ -5,7 +5,8 @@
 }
 
 
-.background {  
+.background {
+    z-index: -2147000000;
 	margin: 0;
 	padding: 0;
 	height: 100vh;
