@@ -19,19 +19,19 @@ const Signup = ({ plan, change, triggerVerifyPage, setVerificationInfo}) => {
 
     const amounts = {
         monthly: 6.99,
-        semestrial: 39.99,
-        yearly: 74.99
+        semestrial: 37.99,
+        yearly: 69.99
     }
 
     const prices = {
         monthly: { amount: amounts.monthly, label: null },
         semestrial: {
             amount: amounts.semestrial,
-            label: `-${Math.round((1 - (amounts.semestrial / (amounts.monthly * 6))) * 100)}%`
+            label: `-30%`
         },
         yearly: {
             amount: amounts.yearly,
-            label: `-${Math.round((1 - (amounts.yearly / (amounts.monthly * 12))) * 100)}%`
+            label: `-30%`
         },
     };
 
@@ -165,11 +165,18 @@ const Signup = ({ plan, change, triggerVerifyPage, setVerificationInfo}) => {
                     <hr className="w-full my-2 border-gray-300" />
                     
                     <div className="flex flex-col items-start w-full px-1 text-sm text-gray-700 mb-2 mt-2">
+                        <div className="flex flex-row w-full items-center justify-center py-1 rounded bg-green-100 text-green-700 text-xs font-medium">
+                            <div className="rounded bg-green-700 text-white text-xs font-semibold px-1 py-0.5">
+                                NOU!
+                            </div>
+                            <p className="mb-0 ml-2">Încearcă 10 zile gratuit!</p>
+                        </div>
                         <p className="mb-1 text-xs">Abonament Recurent</p>
+                        
                         <h3 className="mb-1 font-semibold">
                             {recurrence !== "monthly" && (
                                 <div className="text-xs text-red-500 line-through -mb-1">
-                                    €{(amounts.monthly * (recurrence === "semestrial" ? 6 : 12)).toFixed(2)}
+                                    €{(recurrence === "monthly" ? 10 : recurrence === "semestrial" ? 55 : 100).toFixed(2)}
                                 </div>
                             )}
                             €{prices[recurrence].amount.toFixed(2)}
@@ -177,6 +184,7 @@ const Signup = ({ plan, change, triggerVerifyPage, setVerificationInfo}) => {
                                 <span className="ml-2 px-2 py-0.5 bg-red-100 text-red-600 text-xs font-medium rounded">{prices[recurrence].label}</span>
                             )}
                         </h3>
+                        
                         <div className="flex gap-4">
                             <label className="flex items-center">
                                 <input
@@ -212,11 +220,8 @@ const Signup = ({ plan, change, triggerVerifyPage, setVerificationInfo}) => {
                                 Anual
                             </label>
                         </div>
-                        <div className="flex flex-row w-full items-center justify-center mt-1 py-1 rounded bg-green-100 text-green-700 text-xs font-medium">
-                            <div className="rounded bg-green-700 text-white text-xs font-semibold px-1 py-0.5">
-                                NOU!
-                            </div>
-                            <p className="mb-0 ml-2">Încearcă 10 zile gratuit!</p>
+                        <div className="flex flex-row w-full items-center justify-center mt-1 py-1 rounded bg-red-100 text-red-700 text-xs font-medium">
+                            <p className="mb-0 ml-2">Reducerea este valabila pana la sfarsitul vacantei judecatoresti.</p>
                         </div>
                     </div>
                     {error && <div className={styles.error_msg}>{error}</div>}

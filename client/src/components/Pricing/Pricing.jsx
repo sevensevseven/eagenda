@@ -9,22 +9,23 @@ export const plans = [
         link: process.env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_8wM2aR5sQ1Ht9205ko' : '',
         priceId: process.env.NODE_ENV === 'development' ? 'price_1RdCwsIImGcHCAj8cc1JoZ6K' : '',
         price: 6.99,
-        duration: '/ luna'
+        duration: '/ luna',
+        discount: 30,
     },
     {
         link: process.env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_dR63eV2gEdqbba8bIN' : '',
         priceId: process.env.NODE_ENV === 'development' ? 'price_1RdCxgIImGcHCAj8iWqDnLuS' : '',
-        price: 39.99,
+        price: 37.99,
         duration: '/ 6 luni',
-        discount: 5,
+        discount: 30,
     },
     {
         link: process.env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_cN2cPv5sQ5XJfqo9AG' : '',
         priceId: process.env.NODE_ENV === 'development' ? 'price_1RdCyJIImGcHCAj8if6fIGS1' : '',
 
-        price: 74.99,
+        price: 69.99,
         duration: '/ an',
-        discount: 11,
+        discount: 30,
     }
 ];
 
@@ -87,7 +88,7 @@ const Pricing = ({ uid }) => {
                                             type="radio"
                                             name="quarterly"
                                             className="radio"
-                                            checked={plan.price === 39.99}
+                                            checked={plan.price === 37.99}
                                         />
                                         <span>Plata Semestriala</span>
                                     </div>
@@ -99,7 +100,7 @@ const Pricing = ({ uid }) => {
                                             type="radio"
                                             name="yearly"
                                             className="radio"
-                                            checked={plan.price === 74.99}
+                                            checked={plan.price === 69.99}
                                         />
                                         <span>Plata Anuala</span>
                                     </div>
