@@ -24,7 +24,7 @@ const Signup = ({ plan, change, triggerVerifyPage, setVerificationInfo}) => {
     }
 
     const prices = {
-        monthly: { amount: amounts.monthly, label: null },
+        monthly: { amount: amounts.monthly, label: `-30%` },
         semestrial: {
             amount: amounts.semestrial,
             label: `-30%`
@@ -108,7 +108,7 @@ const Signup = ({ plan, change, triggerVerifyPage, setVerificationInfo}) => {
         <div className={styles.signup_form_container}>
             <div className={styles.right}>
                 <form className={styles.form_container} onSubmit={handleSubmit}>
-                    <h1 style={{ marginTop: 30 }}>Creează-ți un cont</h1>
+                    <h1 style={{ marginTop: 20 }}>Creează-ți un cont</h1>
                     <input
                         type = "text"
                         placeholder = "Prenume"
@@ -174,11 +174,9 @@ const Signup = ({ plan, change, triggerVerifyPage, setVerificationInfo}) => {
                         <p className="mb-1 text-xs">Abonament Recurent</p>
                         
                         <h3 className="mb-1 font-semibold">
-                            {recurrence !== "monthly" && (
-                                <div className="text-xs text-red-500 line-through -mb-1">
-                                    €{(recurrence === "monthly" ? 10 : recurrence === "semestrial" ? 55 : 100).toFixed(2)}
-                                </div>
-                            )}
+                            <div className="text-xs text-red-500 line-through -mb-1">
+                                €{(recurrence === "monthly" ? 10 : recurrence === "semestrial" ? 55 : 100).toFixed(2)}
+                            </div>
                             €{prices[recurrence].amount.toFixed(2)}
                             {prices[recurrence].label && (
                                 <span className="ml-2 px-2 py-0.5 bg-red-100 text-red-600 text-xs font-medium rounded">{prices[recurrence].label}</span>
@@ -221,7 +219,7 @@ const Signup = ({ plan, change, triggerVerifyPage, setVerificationInfo}) => {
                             </label>
                         </div>
                         <div className="flex flex-row w-full items-center justify-center mt-1 py-1 rounded bg-red-100 text-red-700 text-xs font-medium">
-                            <p className="mb-0 ml-2">Reducerea este valabila pana la sfarsitul vacantei judecatoresti.</p>
+                            <p className="mb-0 mx-2 text-center">Reducerea este valabila pana la sfarsitul vacantei judecatoresti.</p>
                         </div>
                     </div>
                     {error && <div className={styles.error_msg}>{error}</div>}
@@ -229,8 +227,8 @@ const Signup = ({ plan, change, triggerVerifyPage, setVerificationInfo}) => {
                     <button type="submit" className={styles.green_btn} disabled={submitting}>
                         {submitting ? <BarLoader color={"#ffffff"} width={100} height={3} /> : "Pasul următor"}
                     </button>
-                    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", marginTop: "10px" }} className={styles.change}>
-                        <p style={{ marginBottom: 0 }}>Deja membru?</p>
+                    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", marginTop: "7px" }} className={styles.change}>
+                        <p style={{ marginBottom: 0, fontSize: "14px" }}>Deja membru?</p>
                         <button type="button" className={styles.white_btn} onClick={() => change(true)}>
                             Conectează-te!
                         </button>
