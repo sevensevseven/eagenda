@@ -296,8 +296,8 @@ app.post("/api/create-subscription-checkout-session", async(req, res) => {
     const {plan, customerId} = req.body;
     let planId = null;
     if (plan == 6.99) planId = month;
-    else if (plan == 39.99) planId = half;
-    else if (plan == 74.99) planId = year;
+    else if (plan == 37.99) planId = half;
+    else if (plan == 69.99) planId = year;
 
     function insertSessionIdToUser(id, sessionId) {
         return new Promise((resolve, reject) => {
