@@ -3,8 +3,8 @@
 export default function Pricing() {
   const plans = [
     { name: "Lunar", price: "6.99€", duration: "1 lună" },
-    { name: "Semestrial", price: "39.99€", duration: "6 luni" },
-    { name: "Anual", price: "74.99€", duration: "12 luni" },
+    { name: "Semestrial", price: "37.99€", duration: "6 luni" },
+    { name: "Anual", price: "69.99€", duration: "12 luni" },
   ];
 
   const features = [
