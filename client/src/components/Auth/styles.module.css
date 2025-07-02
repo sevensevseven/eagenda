@@ -7,6 +7,7 @@
 
 .background {
     z-index: -2147000000;
+    position: absolute;
 	margin: 0;
 	padding: 0;
 	height: 100vh;
@@ -36,6 +37,7 @@
     width: 50vmin;
     height: 50vmin;
     border-radius: 50vmin;
+    z-index: -2146000000;
     backface-visibility: hidden;
     position: absolute;
     animation: move;
