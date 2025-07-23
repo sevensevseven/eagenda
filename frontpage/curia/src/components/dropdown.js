@@ -16,7 +16,7 @@ export default function Dropdown({title, answer}) {
             </div>
             <div
                 className={`transition-all duration-500 ease-in-out overflow-hidden py-2 px-4 ${
-                    isOpen ? 'max-h-[500px] opacity-100 mt-2 bg-white pb-4 rounded-b-xl' : 'max-h-0 opacity-0'
+                    isOpen ? 'max-h-[1000px] opacity-100 mt-2 bg-white pb-4 rounded-b-xl' : 'max-h-0 opacity-0'
                 }`}
             >
                 {answer}
